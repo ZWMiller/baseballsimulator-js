@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="Simulation.js"></script>
+  </head>
+  <body onload="onOpen()" style="font-family:arial">
+    <h1>Baseball Simulator</h1>
+    <form name="valform" action="" method="POST">
+
+      Batting Average: <input type="text" id="batAverageBoxid" name="batAverageBox"><br/>
+      On Base Percentage: <input type="text" id="onBasePercBoxid" name="onBasePercBox"><br/>
+      Num At Bat Sims: <input type="text" id="numSimBoxid" name="numSimBox"><br/>
+      Num Inning Sims: <input type="text" id="numInnBoxid" name="numInnBox"><br/>
+      <input type="button" name="AtBat" value="Sim At Bats" onclick="runSimAtBat()" />
+      <input type="button" name="Inning" value="Sim Inning" onclick="runSimInning(0)" />
+      <input type="button" name="Inning" value="Sim Multiple Innings" onclick="runMultInnings()" />
+      <br/><br/>
+      Num Hits/Walks: <input type="text" id="numHitsBoxid" name="numHitsBox"><br/>
+      Num Outs: <input type="text" id="numOutsBoxid" name="numOutsBox"><br/>
+      Num Runs: <input type="text" id="numRunsBoxid" name="numRunsBox"><br/>
+    </form>
+  </body>
+</html>
