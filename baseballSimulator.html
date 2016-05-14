@@ -6,16 +6,47 @@
   </head>
   <body onload="onOpen()" style="font-family:arial">
     <h1>Baseball Simulator</h1>
-    <form name="valform" action="" method="POST">
-
-      Batting Average: <input type="text" id="batAverageBoxid" name="batAverageBox"><br/>
-      On Base Percentage: <input type="text" id="onBasePercBoxid" name="onBasePercBox"><br/>
+    <form name="batterForm" action="" id="batterFormid" method="POST">
+      <h5>Batter 1:</h5>
+      Batting Average: <input type="text" id="batAverageBoxid1" name="batAverageBox1"><br/>
+      On Base Percentage: <input type="text" id="onBasePercBoxid1" name="onBasePercBox1"><br/>
+      <h5>Batter 2:</h5>
+      Batting Average: <input type="text" id="batAverageBoxid2" name="batAverageBox2"><br/>
+      On Base Percentage: <input type="text" id="onBasePercBoxid2" name="onBasePercBox2"><br/>
+      <h5>Batter 3:</h5>
+      Batting Average: <input type="text" id="batAverageBoxid3" name="batAverageBox3"><br/>
+      On Base Percentage: <input type="text" id="onBasePercBoxid3" name="onBasePercBox3"><br/>
+      <h5>Batter 4:</h5>
+      Batting Average: <input type="text" id="batAverageBoxid4" name="batAverageBox4"><br/>
+      On Base Percentage: <input type="text" id="onBasePercBoxid4" name="onBasePercBox4"><br/>
+      <h5>Batter 5:</h5>
+      Batting Average: <input type="text" id="batAverageBoxid5" name="batAverageBox5"><br/>
+      On Base Percentage: <input type="text" id="onBasePercBoxid5" name="onBasePercBox5"><br/>
+      <h5>Batter 6:</h5>
+      Batting Average: <input type="text" id="batAverageBoxid6" name="batAverageBox6"><br/>
+      On Base Percentage: <input type="text" id="onBasePercBoxid6" name="onBasePercBox6"><br/>
+      <h5>Batter 7:</h5>
+      Batting Average: <input type="text" id="batAverageBoxid7" name="batAverageBox7"><br/>
+      On Base Percentage: <input type="text" id="onBasePercBoxid7" name="onBasePercBox7"><br/>
+      <h5>Batter 8:</h5>
+      Batting Average: <input type="text" id="batAverageBoxid8" name="batAverageBox8"><br/>
+      On Base Percentage: <input type="text" id="onBasePercBoxid8" name="onBasePercBox8"><br/>
+      <h5>Batter 9:</h5>
+      Batting Average: <input type="text" id="batAverageBoxid9" name="batAverageBox9"><br/>
+      On Base Percentage: <input type="text" id="onBasePercBoxid9" name="onBasePercBox9"><br/>
+    </form>
+    <b>---------------------------</b><br/>
+    <br/>
+    <form name="simControls" action="" method="POST">
       Num At Bat Sims: <input type="text" id="numSimBoxid" name="numSimBox"><br/>
       Num Inning Sims: <input type="text" id="numInnBoxid" name="numInnBox"><br/>
       <input type="button" name="AtBat" value="Sim At Bats" onclick="runSimAtBat()" />
       <input type="button" name="Inning" value="Sim Inning" onclick="runSimInning(0)" />
       <input type="button" name="Inning" value="Sim Multiple Innings" onclick="runMultInnings()" />
-      <br/><br/>
+    </form>
+    <b>---------------------------</b><br/>
+    <br/>
+    <form name="outputForm" action="" method="POST">
       Num Hits/Walks: <input type="text" id="numHitsBoxid" name="numHitsBox"><br/>
       Num Outs: <input type="text" id="numOutsBoxid" name="numOutsBox"><br/>
       Num Runs: <input type="text" id="numRunsBoxid" name="numRunsBox"><br/>

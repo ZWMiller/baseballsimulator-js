@@ -5,20 +5,28 @@ function onOpen()
 
 function setDefaultValues()
 {
-  document.getElementById('batAverageBoxid').value = 0.25;
-  document.getElementById('onBasePercBoxid').value = 0.3;
+  //document.getElementById('batAverageBoxid1').value = 0.25;
+  //document.getElementById('onBasePercBoxid1').value = 0.3;
+  var elements = document.getElementById("batterFormid").elements;
+  for (var i = 0; i < elements.length; i+=2) {
+    var temp1 = 0.25-(i/100);
+    var temp2 = 0.3-(i/100);
+    elements[i].value = temp1.toFixed(3);
+    elements[i+1].value = temp2.toFixed(3);
+  }
+
   document.getElementById('numSimBoxid').value = 10;
-  document.getElementById('numInnBoxid').value = 10
+  document.getElementById('numInnBoxid').value = 10;
 }
 
 function runSimAtBat()
 {
   var hits=0;
   var outs=0;
-  var battingAverage = document.getElementById('batAverageBoxid').value;
-  var onBasePerc = document.getElementById('onBasePercBoxid').value;
+  var battingAverage = document.getElementById('batAverageBoxid1').value;
+  var onBasePerc = document.getElementById('onBasePercBoxid1').value;
 
-  if(!checkBattingAverage(battingAverage,onBasePerc)) return false;
+  if(!checkBatterStats(battingAverage,onBasePerc)) return false;
   for(var i=0; i<document.getElementById('numSimBoxid').value; i++)
     {
       if(simAtBat(onBasePerc))
@@ -41,6 +49,8 @@ function runMultInnings()
   for(var i=0; i<numInns; i++)
     {
       var temp = runSimInning(1);
+      if(temp == "exit")
+        return;
       hits += temp[0];
       runs += temp[1];
       simCount++;
@@ -49,6 +59,7 @@ function runMultInnings()
       {
         document.getElementById('numHitsBoxid').value = hits/simCount;
         document.getElementById('numRunsBoxid').value = runs/simCount;
+        document.getElementById('numOutsBoxid').value = "X X X";
       }
       else
         {
@@ -63,13 +74,20 @@ function runSimInning(mode)
   var outs=0;
   var runs=0;
   var hitType=0;
-  var baseState=[0,0,0];  
-  var battingAverage = document.getElementById('batAverageBoxid').value;
-  var onBasePerc = document.getElementById('onBasePercBoxid').value;
+  var hitterNum = 0;
+  var baseState=[0,0,0]; 
+  var batterStats = [];
+  batterStats = getLineup();
+  if(batterStats == false)
+    return;
+  //var battingAverage = document.getElementById('batAverageBoxid1').value;
+  //var onBasePerc = document.getElementById('onBasePercBoxid1').value;
 
-  if(!checkBattingAverage(battingAverage,onBasePerc)) return false;
   while(outs < 3)
-    {      
+    { 
+      var battingAverage = batterStats[hitterNum][0];
+      var onBasePerc = batterStats[hitterNum][1];
+      //alert(battingAverage +" "+ onBasePerc);
       if(simAtBat(onBasePerc))
         {
           hits++;
@@ -78,6 +96,8 @@ function runSimInning(mode)
         }
         else
           outs++;
+        if(++hitterNum >= (document.getElementById("batterFormid").elements.length/2))
+          hitterNum = 0;
     }
     if(mode == 1)
       {
@@ -93,11 +113,39 @@ function runSimInning(mode)
 
 }
 
-function checkBattingAverage(battingAverage,OBP)
+function lineupFailure()
+{
+  document.getElementById('numHitsBoxid').value = "Invalid Lineup";
+  document.getElementById('numOutsBoxid').value = "Invalid Lineup";
+  document.getElementById('numRunsBoxid').value = "Invalid Lineup";
+
+}
+
+function getLineup()
+{
+  var elements = document.getElementById("batterFormid").elements;
+  var batterStats = [];
+  for (var i = 0; i < elements.length; i+=2) {
+    var avg = elements[i].value;
+    var obp = elements[i+1].value;
+    if(!checkBatterStats(avg,obp)){
+        lineupFailure();
+        return false;
+    }
+    batterStats.push([avg,obp]);
+  }
+  return batterStats;
+}
+
+function checkBatterStats(battingAverage,OBP)
 {
   if(0 > battingAverage || battingAverage >= 1 || 0 > OBP || OBP >= 1)
     {
       alert("Batting Average & On Base Percentage between (0,1) please.");
+      return false;
+    }
+    else if (battingAverage > OBP){
+      alert("OBP > BA for one batter");
       return false;
     }
     else 
@@ -134,8 +182,8 @@ function checkIfWalk(percentWalks)
     {
       return true;
     }
-  else 
-    return false;
+    else 
+      return false;
 }
 
 function moveRunners(hit,baseState)
