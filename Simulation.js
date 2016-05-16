@@ -3,6 +3,19 @@ function onOpen()
   setDefaultValues();
 }
 
+function setToAverage()
+{
+  //document.getElementById('batAverageBoxid1').value = 0.25;
+  //document.getElementById('onBasePercBoxid1').value = 0.3;
+  var elements = document.getElementById("batterFormid").elements;
+  for (var i = 0; i < elements.length; i+=2) {
+    var temp1 = 0.25;
+    var temp2 = 0.3;
+    elements[i].value = temp1.toFixed(3);
+    elements[i+1].value = temp2.toFixed(3);
+  }
+}
+
 function setDefaultValues()
 {
   //document.getElementById('batAverageBoxid1').value = 0.25;
@@ -80,14 +93,11 @@ function runSimInning(mode)
   batterStats = getLineup();
   if(batterStats == false)
     return;
-  //var battingAverage = document.getElementById('batAverageBoxid1').value;
-  //var onBasePerc = document.getElementById('onBasePercBoxid1').value;
 
   while(outs < 3)
     { 
       var battingAverage = batterStats[hitterNum][0];
       var onBasePerc = batterStats[hitterNum][1];
-      //alert(battingAverage +" "+ onBasePerc);
       if(simAtBat(onBasePerc))
         {
           hits++;
