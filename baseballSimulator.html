@@ -2,7 +2,24 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <style>
+.bars rect {
+  fill: steelblue;
+}
+
+    .axis text {
+      font: 10px sans-serif;
+    }
+
+    .axis path, .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+    </style>
     <script src="Simulation.js"></script>
+    <script type="text/javascript" src="d3.min.js"></script>
+    <script src="histogram-chart.js"></script>
   </head>
   <body onload="onOpen()" style="font-family:arial">
     <h1>Baseball Simulator</h1>
@@ -52,5 +69,6 @@
       Num Outs: <input type="text" id="numOutsBoxid" name="numOutsBox"><br/>
       Num Runs: <input type="text" id="numRunsBoxid" name="numRunsBox"><br/>
     </form>
+    <br/>
   </body>
 </html>

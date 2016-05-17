@@ -29,7 +29,7 @@ function setDefaultValues()
   }
 
   document.getElementById('numSimBoxid').value = 10;
-  document.getElementById('numInnBoxid').value = 10;
+  document.getElementById('numInnBoxid').value = 1000;
 }
 
 function runSimAtBat()
@@ -58,6 +58,8 @@ function runMultInnings()
   var numInns = document.getElementById('numInnBoxid').value 
   var runs = 0;
   var hits = 0;
+  var hitLog = [];
+  var runLog = [];
   var simCount = 0;
   for(var i=0; i<numInns; i++)
     {
@@ -66,6 +68,8 @@ function runMultInnings()
         return;
       hits += temp[0];
       runs += temp[1];
+      hitLog.push(temp[0]);
+      runLog.push(temp[1]);
       simCount++;
     }
     if(simCount > 0)
@@ -79,6 +83,18 @@ function runMultInnings()
           document.getElementById('numHitsBoxid').value = "X X X";
           document.getElementById('numRunsBoxid').value = "X X X";
         }
+    makeHisto(hitLog);
+    makeHisto(runLog);
+}
+
+function makeHisto(data)
+{
+   d3.select("body")
+  .datum(data)
+  .call(histogramChart()
+      .bins(Math.max.apply(Math, data))
+      .tickFormat(d3.format("0f")));
+
 }
 
 function runSimInning(mode)
