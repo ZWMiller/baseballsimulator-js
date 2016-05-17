@@ -8,7 +8,7 @@ function setToAverage()
   //document.getElementById('batAverageBoxid1').value = 0.25;
   //document.getElementById('onBasePercBoxid1').value = 0.3;
   var elements = document.getElementById("batterFormid").elements;
-  for (var i = 0; i < elements.length; i+=2) {
+  for (var i = 0; i < elements.length-1; i+=2) {
     var temp1 = 0.25;
     var temp2 = 0.3;
     elements[i].value = temp1.toFixed(3);
@@ -21,7 +21,7 @@ function setDefaultValues()
   //document.getElementById('batAverageBoxid1').value = 0.25;
   //document.getElementById('onBasePercBoxid1').value = 0.3;
   var elements = document.getElementById("batterFormid").elements;
-  for (var i = 0; i < elements.length; i+=2) {
+  for (var i = 0; i < elements.length-1; i+=2) {
     var temp1 = 0.25-(i/100);
     var temp2 = 0.3-(i/100);
     elements[i].value = temp1.toFixed(3);
@@ -122,7 +122,7 @@ function runSimInning(mode)
         }
         else
           outs++;
-        if(++hitterNum >= (document.getElementById("batterFormid").elements.length/2))
+        if(++hitterNum >= ((document.getElementById("batterFormid").elements.length-1)/2))
           hitterNum = 0;
     }
     if(mode == 1)
@@ -151,7 +151,7 @@ function getLineup()
 {
   var elements = document.getElementById("batterFormid").elements;
   var batterStats = [];
-  for (var i = 0; i < elements.length; i+=2) {
+  for (var i = 0; i < elements.length-1; i+=2) {
     var avg = elements[i].value;
     var obp = elements[i+1].value;
     if(!checkBatterStats(avg,obp)){
