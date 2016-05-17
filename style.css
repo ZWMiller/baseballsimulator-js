@@ -1,0 +1,61 @@
+h2 {
+  text-align: center;
+}
+
+form {
+  background: -webkit-linear-gradient(bottom, #CCCCCC, #DDDDDD 175px);
+  background: -moz-linear-gradient(bottom, #CCCCCC, #DDDDDD 175px);
+  background: linear-gradient(bottom, #CCCCCC, #DDDDDD 175px);
+  /*margin: auto;*/
+  position: relative;
+  width: 850px;
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 14px;
+  font-style: italic;
+  line-height: 24px;
+  font-weight: bold;
+  color: #000;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid #999;
+  border: inset 1px solid #333;
+  -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+}
+
+input {
+  width: 375px;
+  display: block;
+  border: 1px solid #999;
+  height: 25px;
+  -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+}
+
+input[type=button] {
+  width: 200px;
+  position: relative;
+  left: 10px;
+  bottom: 10px;
+  background: #AAAAAA;
+  color: #000;
+  font-family: Tahoma, Geneva, sans-serif;
+  height: 30px;
+  border-radius: 5px;
+  border: 1p solid #999;
+  -webkit-transition-duration: 0.2s; /* Safari */
+  transition-duration: 0.2s;
+}
+
+input[type=button]:hover {
+  background: #fff;
+  color: #000;
+}
+
+td {
+    padding:0 15px 0 15px;
+    vertical-align: top;
+}

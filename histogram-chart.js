@@ -61,6 +61,18 @@ function histogramChart() {
                   .attr("x", width - width/3)
                   .attr("y", height - height/1.2)
                   .text("Runs Scored in the Inning");
+
+                var padding = 20;
+                var border=1;
+                var bordercolor='black';
+                var borderPath = svg.append("rect")
+                  .attr("x", 0)
+                  .attr("y", 0)
+                  .attr("height", height)
+                  .attr("width", width)
+                  .style("stroke", bordercolor)
+                  .style("fill", "none")
+                  .style("stroke-width", border);
     });
   }
 
