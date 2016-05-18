@@ -35,7 +35,7 @@
               Num At Bat Sims: <input type="text" id="numSimBoxid" name="numSimBox"><br/>
               Num Inning Sims: <input type="text" id="numInnBoxid" name="numInnBox"><br/>
               <input type="button" name="AtBat" value="Sim At Bats" onclick="runSimAtBat()" />
-              <input type="button" name="Inning" value="Sim Inning" onclick="runSimInning(0,1)" />
+              <input type="button" name="Inning" value="Sim Inning" onclick="runSimInning(0,1,0)" />
             </form>
           </td>
           <td>
@@ -53,6 +53,7 @@
       <ul id="info-nav">
         <li><a href="#batterFormid1"><span>Team 1</span></a></li>
         <li><a href="#batterFormid2"><span>Team 2</span></a></li>
+        <li><a href="#gameSim"><span>Simulate Game</span></a></li>
       </ul>
       <br/>
       <br/>
@@ -132,6 +133,22 @@
                   On Base Percentage: <input type="text" id="onBasePercBoxid18" name="onBasePercBox18"><br/><br/>
                   <input type="button" name="ResetVals" value="Set All to League Avg" onclick="setToAverage(2)" />
                   <input type="button" name="Inning" value="Sim Multiple Innings" onclick="runMultInnings(2)" />       
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div id="gameSim" class="hide">
+            <table>
+              <tr>
+                <td>
+                  Team 1 Score: <input type="text" id="team1Score"><br/>
+                  Team 2 Score: <input type="text" id="team2Score"><br/>
+                  <input type="button" name="simGame" value="Simulate Game" onclick="simulateGame()" /><br/>
+                  <input type="button" name="simMultGame" value="Simulate 1000 Games" onclick="simulateMultGame()" />
+                </td>
+                <td>
+                  Record: <input type="text" id="gameRecord"><br/>
+                  <input type="button" name="clrRecord" value="Clear Record" onclick="clearRecord()" />
                 </td>
               </tr>
             </table>

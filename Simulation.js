@@ -5,14 +5,14 @@ function onOpen()
 
 function setToAverage(team)
 {
-    if(team == 1){
-      var startNum = 1;
-      var endNum = 9;
-    }
-    else if(team == 2){
-      var startNum = 10;
-      var endNum = 18;
-    } 
+  if(team == 1){
+    var startNum = 1;
+    var endNum = 9;
+  }
+  else if(team == 2){
+    var startNum = 10;
+    var endNum = 18;
+  } 
 
   var batterStats = [];
   for (var i = startNum; i <= endNum; i++) {
@@ -41,6 +41,21 @@ function setDefaultValues()
 
   document.getElementById('numSimBoxid').value = 10;
   document.getElementById('numInnBoxid').value = 1000;
+  document.getElementById('gameRecord').value = "0-0";
+}
+
+function updateRecord(winningTeam){
+ var record = document.getElementById('gameRecord').value;
+ var arr = record.split("-");
+ if(winningTeam==1)
+   arr[0]++;
+ if(winningTeam==2)
+   arr[1]++;
+ document.getElementById('gameRecord').value = arr[0]+"-"+arr[1];
+}
+
+function clearRecord(){
+  document.getElementById('gameRecord').value = "0-0";
 }
 
 function runSimAtBat()
@@ -64,13 +79,40 @@ function runSimAtBat()
     document.getElementById('numRunsBoxid').value = "X X X";
 }
 
+function simulateMultGame(){
+  for(var gamenum=0;gamenum<1000;gamenum++){
+    simulateGame();
+  }   
+}
+
+function simulateGame(){
+  var runs = [0,0];
+  var inning = 1;
+  var currentBatterNumber = [0,0];
+  while(inning <= 9 || (runs[0] == runs[1])){
+    for(var team=1; team<=2; team++){
+      var temp = runSimInning(1,team,currentBatterNumber[team-1]);
+      if(temp == "exit"){
+        alert("runSimInning Failed. Exit.");
+        return;
+      }
+
+      runs[team-1] += temp[1];
+      currentBatterNumber[team-1] = temp[2];
+    }
+    inning++;
+  }
+  document.getElementById('team1Score').value = runs[0];
+  document.getElementById('team2Score').value = runs[1];
+  if(runs[0] > runs[1])
+    updateRecord(1);
+  if(runs[1] > runs[0])
+    updateRecord(2);
+
+}
+
 function runMultInnings(team)
 {
-  if(team != 1 && team != 2){
-    alert("Bad Team Selection. Internal Problem. Default to 1.");
-    team = 1;
-  }
-
   var numInns = document.getElementById('numInnBoxid').value 
   var runs = 0;
   var hits = 0;
@@ -79,7 +121,7 @@ function runMultInnings(team)
   var simCount = 0;
   for(var i=0; i<numInns; i++)
     {
-      var temp = runSimInning(1,team);
+      var temp = runSimInning(1,team,0);
       if(temp == "exit")
         return;
       hits += temp[0];
@@ -110,16 +152,17 @@ function makeHisto(data)
     .call(histogramChart()
     .bins(Math.max.apply(Math, data))
     .tickFormat(d3.format("0f")));
-
 }
 
-function runSimInning(mode,team)
+function runSimInning(mode,team,currentBatter)
 {
+  team = checkValidTeam(team);
+
   var hits=0;
   var outs=0;
   var runs=0;
   var hitType=0;
-  var hitterNum = 0;
+  var hitterNum = currentBatter;
   var baseState=[0,0,0]; 
   var batterStats = [];
   batterStats = getLineup(team);
@@ -143,7 +186,7 @@ function runSimInning(mode,team)
     }
     if(mode == 1)
       {
-        var innStats = [hits, runs];
+        var innStats = [hits, runs, hitterNum];
         return innStats;
       }
       else 
@@ -153,6 +196,15 @@ function runSimInning(mode,team)
           document.getElementById('numRunsBoxid').value = runs;
         }
 
+}
+
+function checkValidTeam(team){
+
+  if(team != 1 && team != 2){
+    alert("Bad Team Selection. Internal Problem. Default to 1.");
+    team = 1;
+  }
+  return team;
 }
 
 function lineupFailure()
@@ -245,16 +297,16 @@ function moveRunners(hit,baseState)
   var runs=0;
   for(var i=0; i<hit; i++)
     {
-      for(var base=3; base>0; base--)
+      for(var base=2; base>=0; base--)
         {
-          if(base == 3 && baseState[base] == 1)
+          if(base == 2 && baseState[base] == 1)
             {
               runs++;
               baseState[base] = baseState[base-1];
             }
-            if(base == 1 && i == 0)
+            if(base == 0 && i == 0)
               baseState[base] = 1;
-            else if(base == 1)
+            else if(base == 0)
               baseState[base] = 0;
             else
               baseState[base] = baseState[base-1];
