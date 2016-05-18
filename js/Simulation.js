@@ -79,14 +79,21 @@ function runSimAtBat()
     document.getElementById('numRunsBoxid').value = "X X X";
 }
 
-function simulateMultGame(){
-  for(var gamenum=0;gamenum<1000;gamenum++){
-    simulateGame();
+function simulateMultGame(games){
+  var runs1 = [];
+  var runs2 = [];
+  for(var gamenum=0;gamenum<games;gamenum++){
+    var temp = simulateGame(1);
+    runs1.push(temp[0]);
+    runs2.push(temp[1]);
   }   
+  makeHisto(runs1,"Team 1 Score");
+  makeHisto(runs2,"Team 2 Score");
 }
 
-function simulateGame(){
+function simulateGame(mode){
   var runs = [0,0];
+  var runLog = [];
   var inning = 1;
   var currentBatterNumber = [0,0];
   while(inning <= 9 || (runs[0] == runs[1])){
@@ -108,7 +115,9 @@ function simulateGame(){
     updateRecord(1);
   if(runs[1] > runs[0])
     updateRecord(2);
-
+  if(mode == 1){
+    return runs;
+  }
 }
 
 function runMultInnings(team)
@@ -141,15 +150,15 @@ function runMultInnings(team)
           document.getElementById('numHitsBoxid').value = "X X X";
           document.getElementById('numRunsBoxid').value = "X X X";
         }
-        makeHisto(hitLog);
-        makeHisto(runLog);
+        makeHisto(hitLog,"Hits in the Inning");
+        makeHisto(runLog,"Runs in the Inning");
 }
 
-function makeHisto(data)
+function makeHisto(data,title)
 {
-  d3.select("body")
+    d3.select("#imageOut")
     .datum(data)
-    .call(histogramChart()
+    .call(histogramChart(title)
     .bins(Math.max.apply(Math, data))
     .tickFormat(d3.format("0f")));
 }

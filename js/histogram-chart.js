@@ -1,4 +1,4 @@
-function histogramChart() {
+function histogramChart(title) {
   var margin = {top: 0, right: 0, bottom: 20, left: 0},
     width = 650,
     height = 400;
@@ -60,7 +60,7 @@ function histogramChart() {
                   .attr("text-anchor", "end")
                   .attr("x", width - width/3)
                   .attr("y", height - height/1.2)
-                  .text("Runs Scored in the Inning");
+                  .text(title);
 
                 var padding = 20;
                 var border=1;

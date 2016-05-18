@@ -26,7 +26,7 @@
   </head>
 
   <body onload="onOpen()" style="font-family:arial">
-    <h1>Baseball Simulator</h1>
+    <div id="banner"><img src="img/baseballSimBanner.png" alt="Banner"></div><br/>
     <div id="controls">
       <table>
         <tr>
@@ -47,6 +47,8 @@
           </td>
         </tr>
       </table>
+    </div>
+    <div id="imageOut">
     </div>
     <br/>
     <div id="Tabs">
@@ -144,7 +146,8 @@
                   Team 1 Score: <input type="text" id="team1Score"><br/>
                   Team 2 Score: <input type="text" id="team2Score"><br/>
                   <input type="button" name="simGame" value="Simulate Game" onclick="simulateGame()" /><br/>
-                  <input type="button" name="simMultGame" value="Simulate 1000 Games" onclick="simulateMultGame()" />
+                  <input type="button" name="simMultGame" value="Simulate 1000 Games" onclick="simulateMultGame(1000)" />
+                  <input type="button" name="simMultGame2" value="Simulate 162 Games" onclick="simulateMultGame(162)" />
                 </td>
                 <td>
                   Record: <input type="text" id="gameRecord"><br/>
