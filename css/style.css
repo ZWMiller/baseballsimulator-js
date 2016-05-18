@@ -75,8 +75,8 @@ input[type=button] {
   position: relative;
   left: 10px;
   bottom: 10px;
-  background: #AAAAAA;
-  color: #000;
+  background: #CCCCCC;
+  color: #0;
   font-family: Tahoma, Geneva, sans-serif;
   height: 30px;
   border-radius: 5px;
@@ -114,9 +114,11 @@ p { padding-left: 15px; }
 #info-nav {
   margin: 0;
   padding: 0;
+  padding-left: 17px;
   width: 100%;
   list-style: none;
 }
+
 
 #info-nav li {
   background: ##C3C3C3;
