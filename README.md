@@ -17,4 +17,9 @@ average number of runs and hits/walks per inning across the simulation. This
 can be done for either Team 1 or Team 2, depending on which team's button is
 selected. Will also plot a histogram of the simulation results.
 
+#### Simulate Game
+Pits the two teams against each other for 9 innings (+ extra innings to
+resolve ties). The team with the highest score at the end of 9 innings is the
+winner and the record of the two teams is updated after each game.
+
 Last Updated - 5/17/16, ZWM
