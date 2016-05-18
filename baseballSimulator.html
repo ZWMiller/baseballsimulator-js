@@ -19,62 +19,113 @@
     }
     </style>
     <script src="Simulation.js"></script>
+    <script src="jquery-2.2.3.min.js"></script>
     <script type="text/javascript" src="d3.min.js"></script>
     <script src="histogram-chart.js"></script>
+    <script src="tabHandler.js"></script>
   </head>
+
   <body onload="onOpen()" style="font-family:arial">
     <h1>Baseball Simulator</h1>
-    <div id="batters">
-      <form name="batterFormid" action="" id="batterFormid" method="POST">
-        <table>
-          <tr>
-            <td>
-              <h3>Batter 1:</h3>
-              Batting Average: <input type="text" id="batAverageBoxid1" name="batAverageBox1"><br/>
-              On Base Percentage: <input type="text" id="onBasePercBoxid1" name="onBasePercBox1"><br/>
-              <h3>Batter 2:</h3>
-              Batting Average: <input type="text" id="batAverageBoxid2" name="batAverageBox2"><br/>
-              On Base Percentage: <input type="text" id="onBasePercBoxid2" name="onBasePercBox2"><br/>
-              <h3>Batter 3:</h3>
-              Batting Average: <input type="text" id="batAverageBoxid3" name="batAverageBox3"><br/>
-              On Base Percentage: <input type="text" id="onBasePercBoxid3" name="onBasePercBox3"><br/>
-              <h3>Batter 4:</h3>
-              Batting Average: <input type="text" id="batAverageBoxid4" name="batAverageBox4"><br/>
-              On Base Percentage: <input type="text" id="onBasePercBoxid4" name="onBasePercBox4"><br/>
-              <h3>Batter 5:</h3>
-              Batting Average: <input type="text" id="batAverageBoxid5" name="batAverageBox5"><br/>
-              On Base Percentage: <input type="text" id="onBasePercBoxid5" name="onBasePercBox5">
-            </td>
-            <td>
-              <h3>Batter 6:</h3>
-              Batting Average: <input type="text" id="batAverageBoxid6" name="batAverageBox6"><br/>
-              On Base Percentage: <input type="text" id="onBasePercBoxid6" name="onBasePercBox6"><br/>
-              <h3>Batter 7:</h3>
-              Batting Average: <input type="text" id="batAverageBoxid7" name="batAverageBox7"><br/>
-              On Base Percentage: <input type="text" id="onBasePercBoxid7" name="onBasePercBox7"><br/>
-              <h3>Batter 8:</h3>
-              Batting Average: <input type="text" id="batAverageBoxid8" name="batAverageBox8"><br/>
-              On Base Percentage: <input type="text" id="onBasePercBoxid8" name="onBasePercBox8"><br/>
-              <h3>Batter 9:</h3>
-              Batting Average: <input type="text" id="batAverageBoxid9" name="batAverageBox9"><br/>
-              On Base Percentage: <input type="text" id="onBasePercBoxid9" name="onBasePercBox9"><br/><br/>
-              <input type="button" name="ResetVals" value="Set All to League Avg" onclick="setToAverage()" />
-            </td>
-          </tr>
-        </table>
-      </form>
-    </div>
-    <b>---------------------------</b><br/>
+    <div id="Tabs">
+      <ul id="info-nav">
+        <li><a href="#batterFormid1"><span>Team 1</span></a></li>
+        <li><a href="#batterFormid2"><span>Team 2</span></a></li>
+      </ul>
+      <br/>
+      <br/>
+      <div id="info">
+        <form name="batterForm" action="" id="batterForm" method="POST" class="formfields">
+          <div id="batterFormid1" class="hide">
+            <table>
+              <tr>
+                <td>
+                  <h2>Team 1</h2>
+                  <h3>Batter 1:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid1" name="batAverageBox1"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid1" name="onBasePercBox1"><br/>
+                  <h3>Batter 2:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid2" name="batAverageBox2"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid2" name="onBasePercBox2"><br/>
+                  <h3>Batter 3:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid3" name="batAverageBox3"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid3" name="onBasePercBox3"><br/>
+                  <h3>Batter 4:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid4" name="batAverageBox4"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid4" name="onBasePercBox4"><br/>
+                  <h3>Batter 5:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid5" name="batAverageBox5"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid5" name="onBasePercBox5">
+                </td>
+                <td>
+                  <h3>Batter 6:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid6" name="batAverageBox6"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid6" name="onBasePercBox6"><br/>
+                  <h3>Batter 7:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid7" name="batAverageBox7"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid7" name="onBasePercBox7"><br/>
+                  <h3>Batter 8:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid8" name="batAverageBox8"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid8" name="onBasePercBox8"><br/>
+                  <h3>Batter 9:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid9" name="batAverageBox9"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid9" name="onBasePercBox9"><br/><br/>
+                  <input type="button" name="ResetVals" value="Set All to League Avg" onclick="setToAverage(1)" />
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div id="batterFormid2" class="hide">
+            <table>
+              <tr>
+                <td>
+                  <h2>Team 2</h2>
+                  <h3>Batter 1:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid10" name="batAverageBox10"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid10" name="onBasePercBox10"><br/>
+                  <h3>Batter 2:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid11" name="batAverageBox11"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid11" name="onBasePercBox11"><br/>
+                  <h3>Batter 3:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid12" name="batAverageBox12"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid12" name="onBasePercBox12"><br/>
+                  <h3>Batter 4:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid13" name="batAverageBox13"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid13" name="onBasePercBox13"><br/>
+                  <h3>Batter 5:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid14" name="batAverageBox14"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid14" name="onBasePercBox14">
+                </td>
+                <td>
+                  <h3>Batter 6:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid15" name="batAverageBox15"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid15" name="onBasePercBox15"><br/>
+                  <h3>Batter 7:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid16" name="batAverageBox16"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid16" name="onBasePercBox16"><br/>
+                  <h3>Batter 8:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid17" name="batAverageBox17"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid17" name="onBasePercBox17"><br/>
+                  <h3>Batter 9:</h3>
+                  Batting Average: <input type="text" id="batAverageBoxid18" name="batAverageBox18"><br/>
+                  On Base Percentage: <input type="text" id="onBasePercBoxid18" name="onBasePercBox18"><br/><br/>
+                  <input type="button" name="ResetVals" value="Set All to League Avg" onclick="setToAverage(2)" />
+                </td>
+              </tr>
+            </table>
+          </div>
+        </form>
+      </div> <!--Content Area Tag-->
+    </div><!--Tabs tag-->
     <br/>
     <div id="controls">
       <form name="simControls" action="" method="POST">
         Num At Bat Sims: <input type="text" id="numSimBoxid" name="numSimBox"><br/>
         Num Inning Sims: <input type="text" id="numInnBoxid" name="numInnBox"><br/>
         <input type="button" name="AtBat" value="Sim At Bats" onclick="runSimAtBat()" />
-        <input type="button" name="Inning" value="Sim Inning" onclick="runSimInning(0)" />
+        <input type="button" name="Inning" value="Sim Inning" onclick="runSimInning(0,1)" />
         <input type="button" name="Inning" value="Sim Multiple Innings" onclick="runMultInnings()" />       
       </form>
-      <b>---------------------------</b><br/>
       <br/>
       <form name="outputForm" action="" method="POST">
         Num Hits/Walks: <input type="text" id="numHitsBoxid" name="numHitsBox"><br/>

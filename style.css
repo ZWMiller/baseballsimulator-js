@@ -25,10 +25,14 @@ form {
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
 }
 
-#batters form {
+#simControls form{
+  position:absolute;
+}
+
+#info form {
   background: -webkit-linear-gradient(bottom, #DDDDDD, #EEEEEE 175px);
   background: -moz-linear-gradient(bottom, #DDDDDD, #EEEEEE 175px);
-  background: linear-gradient(bottom, #DDDDDD, #EEEEEE 175px);
+  background: linear-gradient(bottom, #DDDDDD, #EEEEEE 175px);*/
   /*margin: auto;*/
   position: relative;
   width: 850px;
@@ -81,4 +85,55 @@ input[type=button]:hover {
 td {
     padding:0 15px 0 15px;
     vertical-align: top;
+}
+
+p { padding-left: 15px; }
+
+#info {
+  width: 768px;
+  border: 1px solid #ccc;
+  padding: 0 10px;
+  background: #fff;
+  float: left;
+  margin-bottom: 10px;
+}
+
+#info p {
+  width: inherit;
+  background-color: inherit;
+}
+
+#info-nav {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  list-style: none;
+}
+
+#info-nav li {
+  background: ##C3C3C3;
+  border-bottom: 0;
+  padding: 5px 10px;
+  text-align: center;
+  margin: 0px;
+  background: #ccc;
+  float: left;
+  margin-right: 3px;
+}
+
+#info-nav li a {
+  color: #000;
+  text-decoration: none;
+  text-align: center;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+
+#info-nav li.current {
+  text-align: center;
+  background: #000;
+}
+
+#info-nav li.current a {
+  color: #FFFFFF;
 }
