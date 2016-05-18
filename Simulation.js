@@ -5,34 +5,42 @@ function onOpen()
 
 function setToAverage(team)
 {
-  //document.getElementById('batAverageBoxid1').value = 0.25;
-  //document.getElementById('onBasePercBoxid1').value = 0.3;
-  var elements = document.getElementById("batterFormid"+team).elements;
-  for (var i = 0; i < elements.length-1; i+=2) {
-    var temp1 = 0.25;
-    var temp2 = 0.3;
-    elements[i].value = temp1.toFixed(3);
-    elements[i+1].value = temp2.toFixed(3);
+    if(team == 1){
+      var startNum = 1;
+      var endNum = 9;
+    }
+    else if(team == 2){
+      var startNum = 10;
+      var endNum = 18;
+    } 
+
+  var batterStats = [];
+  for (var i = startNum; i <= endNum; i++) {
+    document.getElementById("batAverageBoxid"+i).value = 0.25;
+    document.getElementById("onBasePercBoxid"+i).value = 0.3;
   }
-}
+} 
 
 function setDefaultValues()
 {
-  //document.getElementById('batAverageBoxid1').value = 0.25;
-  //document.getElementById('onBasePercBoxid1').value = 0.3;
-  for(var tm=1; tm<=2; tm++)
-    {
-      var elements = document.getElementById("batterFormid"+tm).elements;
-      for (var i = 0; i < elements.length-1; i+=2) {
-        var temp1 = 0.25-(i/100);
-        var temp2 = 0.3-(i/100);
-        elements[i].value = temp1.toFixed(3);
-        elements[i+1].value = temp2.toFixed(3);
-      }
+  for(var team = 1; team<=2; team++){
+    if(team == 1){
+      var startNum = 1;
+      var endNum = 9;
+    }
+    else if(team == 2){
+      var startNum = 10;
+      var endNum = 18;
     }
 
-    document.getElementById('numSimBoxid').value = 10;
-    document.getElementById('numInnBoxid').value = 1000;
+    for (var i = startNum; i <= endNum; i++) {
+      document.getElementById('batAverageBoxid'+i).value = 0.25;
+      document.getElementById('onBasePercBoxid'+i).value = 0.3;
+    }
+  }
+
+  document.getElementById('numSimBoxid').value = 10;
+  document.getElementById('numInnBoxid').value = 1000;
 }
 
 function runSimAtBat()
@@ -56,8 +64,13 @@ function runSimAtBat()
     document.getElementById('numRunsBoxid').value = "X X X";
 }
 
-function runMultInnings()
+function runMultInnings(team)
 {
+  if(team != 1 && team != 2){
+    alert("Bad Team Selection. Internal Problem. Default to 1.");
+    team = 1;
+  }
+
   var numInns = document.getElementById('numInnBoxid').value 
   var runs = 0;
   var hits = 0;
@@ -66,7 +79,7 @@ function runMultInnings()
   var simCount = 0;
   for(var i=0; i<numInns; i++)
     {
-      var temp = runSimInning(1,1);
+      var temp = runSimInning(1,team);
       if(temp == "exit")
         return;
       hits += temp[0];
@@ -109,7 +122,7 @@ function runSimInning(mode,team)
   var hitterNum = 0;
   var baseState=[0,0,0]; 
   var batterStats = [];
-  batterStats = getLineup(1);
+  batterStats = getLineup(team);
   if(batterStats == false)
     return;
 
@@ -125,7 +138,7 @@ function runSimInning(mode,team)
         }
         else
           outs++;
-        if(++hitterNum >= ((document.getElementById("batterFormid"+team).elements.length-1)/2))
+        if(++hitterNum >= batterStats.length)
           hitterNum = 0;
     }
     if(mode == 1)
@@ -152,11 +165,23 @@ function lineupFailure()
 
 function getLineup(team)
 {
-  var elements = document.getElementById("batterFormid"+team).elements;
+  if(team == 1){
+    var startNum = 1;
+    var endNum = 9;
+  }
+  else if(team == 2){
+    var startNum = 10;
+    var endNum = 18;
+  }
+  else{
+    lineupFailure();
+    return false;
+  }
+
   var batterStats = [];
-  for (var i = 0; i < elements.length-1; i+=2) {
-    var avg = elements[i].value;
-    var obp = elements[i+1].value;
+  for (var i = startNum; i <= endNum; i++) {
+    var avg = document.getElementById('batAverageBoxid'+i).value;
+    var obp = document.getElementById('onBasePercBoxid'+i).value;
     if(!checkBatterStats(avg,obp)){
       lineupFailure();
       return false;

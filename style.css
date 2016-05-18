@@ -8,7 +8,8 @@ form {
   background: linear-gradient(bottom, #DDDDDD, #EEEEEE 175px);
   /*margin: auto;*/
   position: relative;
-  width: 400px;
+  width: 395px;
+  height: 215px;
   font-family: Tahoma, Geneva, sans-serif;
   font-size: 14px;
   font-style: italic;
@@ -25,9 +26,6 @@ form {
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
 }
 
-#simControls form{
-  position:absolute;
-}
 
 #info form {
   background: -webkit-linear-gradient(bottom, #DDDDDD, #EEEEEE 175px);
@@ -36,6 +34,7 @@ form {
   /*margin: auto;*/
   position: relative;
   width: 850px;
+  height: 1050px;
   font-family: Tahoma, Geneva, sans-serif;
   font-size: 14px;
   font-style: italic;
