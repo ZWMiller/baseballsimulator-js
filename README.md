@@ -3,7 +3,7 @@ This is an attempt to teach myself Javascript. This README will quickly
 discuss the different functions.
 
 #### Simulate At Bat
-Reads in the OBP and decides if the at bat results in a hit/walk or an out.
+Reads in the OBP of (Team 1, Player 1) and decides if the at bat results in a hit/walk or an out.
 This is simulated the number of times listed in 'Num At Bat Sims."
 
 #### Simulate Inning
