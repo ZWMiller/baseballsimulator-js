@@ -87,8 +87,13 @@ function simulateMultGame(games){
     runs1.push(temp[0]);
     runs2.push(temp[1]);
   }   
-  makeHisto(runs1,"Team 1 Score");
-  makeHisto(runs2,"Team 2 Score");
+  clearHists();
+  makeHisto(runs1,"Team 1 Score","imageOut");
+  makeHisto(runs2,"Team 2 Score","imageOut2");
+}
+
+function clearHists(){
+  d3.selectAll("svg").remove();
 }
 
 function simulateGame(mode){
@@ -150,17 +155,19 @@ function runMultInnings(team)
           document.getElementById('numHitsBoxid').value = "X X X";
           document.getElementById('numRunsBoxid').value = "X X X";
         }
-        makeHisto(hitLog,"Hits in the Inning");
-        makeHisto(runLog,"Runs in the Inning");
+        clearHists();
+        makeHisto(hitLog,"Hits in the Inning","imageOut");
+        makeHisto(runLog,"Runs in the Inning","imageOut2");
 }
 
-function makeHisto(data,title)
+function makeHisto(data,title,division)
 {
-    d3.select("#imageOut")
+    d3.select("#"+division)
     .datum(data)
     .call(histogramChart(title)
     .bins(Math.max.apply(Math, data))
     .tickFormat(d3.format("0f")));
+  $("svg").css({top: 20, left: 80, padding: 20, position:'relative'});
 }
 
 function runSimInning(mode,team,currentBatter)

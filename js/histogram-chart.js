@@ -23,9 +23,8 @@ function histogramChart(title) {
           .range([height - margin.top - margin.bottom, 0]);
 
         // Select the svg element, if it exists.
-          d3.select("svg").remove();
+         // d3.select("svg").remove();
           var svg = d3.select(this).selectAll("svg").data([data]);
-
 
           // Otherwise, create the skeletal chart.
           var gEnter = svg.enter().append("svg").append("g");

@@ -35,7 +35,7 @@
               Num At Bat Sims: <input type="text" id="numSimBoxid" name="numSimBox"><br/>
               Num Inning Sims: <input type="text" id="numInnBoxid" name="numInnBox"><br/>
               <input type="button" name="AtBat" value="Sim At Bats" onclick="runSimAtBat()" />
-              <input type="button" name="Inning" value="Sim Inning" onclick="runSimInning(0,1,0)" />
+              <input type="button" name="clearHistograms" value="Clear Hists" onclick="clearHists()" />
             </form>
           </td>
           <td>
@@ -48,8 +48,8 @@
         </tr>
       </table>
     </div>
-    <div id="imageOut">
-    </div>
+    <div id="imageOut"></div>
+    <div id="imageOut2"></div>
     <br/>
     <div id="Tabs">
       <ul id="info-nav">
@@ -145,7 +145,7 @@
                 <td>
                   Team 1 Score: <input type="text" id="team1Score"><br/>
                   Team 2 Score: <input type="text" id="team2Score"><br/>
-                  <input type="button" name="simGame" value="Simulate Game" onclick="simulateGame()" /><br/>
+                  <input type="button" name="simGame" value="Simulate Game" onclick="simulateGame()" />
                   <input type="button" name="simMultGame" value="Simulate 1000 Games" onclick="simulateMultGame(1000)" />
                   <input type="button" name="simMultGame2" value="Simulate 162 Games" onclick="simulateMultGame(162)" />
                 </td>
