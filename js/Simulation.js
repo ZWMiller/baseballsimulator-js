@@ -87,9 +87,27 @@ function simulateMultGame(games){
     runs1.push(temp[0]);
     runs2.push(temp[1]);
   }   
+  var allRuns = runs1.concat(runs2);
+  var allRunAv = average(allRuns);
+  var r1Av = average(runs1);
+  var r2Av = average(runs2);
+  document.getElementById('team1Score').value = r1Av;
+  document.getElementById('team2Score').value = r2Av;
+  document.getElementById('numHitsBoxid').value = "X X X";
+  document.getElementById('numRunsBoxid').value = allRunAv;
+  document.getElementById('numOutsBoxid').value = "X X X";
+
   clearHists();
   makeHisto(runs1,"Team 1 Score","imageOut");
   makeHisto(runs2,"Team 2 Score","imageOut2");
+}
+
+function average(inp){
+  var sum = 0;
+  for(var i=0; i<inp.length; i++){
+    sum+=inp[i];
+  }
+  return (sum/inp.length);
 }
 
 function clearHists(){
