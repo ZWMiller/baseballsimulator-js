@@ -1,48 +1,73 @@
+var simulationData = {};
+simulationData.teams = [];
+
 function onOpen() {
+  createTeams();
   setDefaultValues();
 }
 
-function setToAverage(team) {
-  switch (team) {
-    case 1:
-      var startNum = 1;
-      var endNum = 9;
-      break;
-    case 2:
-      var startNum = 10;
-      var endNum = 18;
-      break;
-  }
+function createTeams() {
+  simulationData.teams[0] = createTeamOne();
+  simulationData.teams[1] = createTeamTwo();
+}
 
-  var batterStats = [];
-  for (var i = startNum; i <= endNum; i++) {
-    document.getElementById("batAverageBoxid"+i).value = 0.25;
-    document.getElementById("onBasePercBoxid"+i).value = 0.3;
+function createTeamOne() {
+  return {
+    firstPlayerNumber: 1,
+    lastPlayerNumber: 9
+  }
+}
+
+function createTeamTwo() {
+  return {
+    firstPlayerNumber: 10,
+    lastPlayerNumber: 18
+  }
+}
+
+function teamOne() {
+  return simulationData.teams[0];
+}
+
+function teamTwo() {
+  return simulationData.teams[1];
+}
+
+function setToAverage(team) {
+  for (var currentPlayerNumber = team.firstPlayerNumber; currentPlayerNumber <= team.lastPlayerNumber; currentPlayerNumber++) {
+    document.getElementById("batAverageBoxid"+currentPlayerNumber).value = 0.25;
+    document.getElementById("onBasePercBoxid"+currentPlayerNumber).value = 0.3;
   }
 }
 
 function setDefaultValues() {
-  for(var team = 1; team<=2; team++){
+  for(var team of simulationData.teams) {
     setToAverage(team)
   }
 
   document.getElementById('numSimBoxid').value = 10;
   document.getElementById('numInnBoxid').value = 1000;
-  document.getElementById('gameRecord').value = "0-0";
+
+  clearGameRecord();
 }
 
 function updateRecord(winningTeam) {
- var record = document.getElementById('gameRecord').value;
- var arr = record.split("-");
- if(winningTeam==1)
-   arr[0]++;
- if(winningTeam==2)
-   arr[1]++;
- document.getElementById('gameRecord').value = arr[0]+"-"+arr[1];
+  winningTeam.gameRecord++;
+
+  renderGameRecord();
 }
 
-function clearRecord() {
-  document.getElementById('gameRecord').value = "0-0";
+function clearGameRecord() {
+  for(var team of simulationData.teams) {
+    team.gameRecord = 0;
+  }
+  renderGameRecord();
+}
+
+function renderGameRecord() {
+  teamOneRecord = teamOne().gameRecord;
+  teamTwoRecord = teamTwo().gameRecord;
+  document.getElementById('gameRecord').value = `${teamOneRecord}-${teamTwoRecord}`;
 }
 
 function runSimAtBat() {
@@ -120,9 +145,9 @@ function simulateGame(mode) {
   document.getElementById('team1Score').value = runs[0];
   document.getElementById('team2Score').value = runs[1];
   if(runs[0] > runs[1])
-    updateRecord(1);
+    updateRecord(teamOne());
   if(runs[1] > runs[0])
-    updateRecord(2);
+    updateRecord(teamTwo());
   if(mode == 1) {
     return runs;
   }
