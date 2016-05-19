@@ -47,6 +47,7 @@ function setDefaultValues() {
 
   document.getElementById('numSimBoxid').value = 10;
   document.getElementById('numInnBoxid').value = 1000;
+  document.getElementById("gamesToSimNumid").value = 162;
   clearGameRecord();
 }
 
@@ -91,7 +92,7 @@ function runSimAtBat() {
 function simulateMultGame(){
   var runs1 = [];
   var runs2 = [];
-  var games =  document.getElementById('gameNum').value;
+  var games =  document.getElementById('gamesToSimNumid').value;
   if(!isNumber(games))
     games = 1;
   for(var gamenum=0;gamenum<games;gamenum++){
