@@ -26,14 +26,7 @@ function setToAverage(team)
 function setDefaultValues()
 {
   for(var team = 1; team<=2; team++){
-    if(team == 1){
-      var startNum = 1;
-      var endNum = 9;
-    }
-    else if(team == 2){
-      var startNum = 10;
-      var endNum = 18;
-    }
+    setToAverage(team)
 
     for (var i = startNum; i <= endNum; i++) {
       document.getElementById('batAverageBoxid'+i).value = 0.25;
