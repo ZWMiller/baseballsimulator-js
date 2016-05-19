@@ -12,14 +12,14 @@ function setToAverage(team)
   else if(team == 2){
     var startNum = 10;
     var endNum = 18;
-  } 
+  }
 
   var batterStats = [];
   for (var i = startNum; i <= endNum; i++) {
     document.getElementById("batAverageBoxid"+i).value = 0.25;
     document.getElementById("onBasePercBoxid"+i).value = 0.3;
   }
-} 
+}
 
 function setDefaultValues()
 {
@@ -86,7 +86,7 @@ function simulateMultGame(games){
     var temp = simulateGame(1);
     runs1.push(temp[0]);
     runs2.push(temp[1]);
-  }   
+  }
   var allRuns = runs1.concat(runs2);
   var allRunAv = average(allRuns);
   var r1Av = average(runs1);
@@ -145,7 +145,7 @@ function simulateGame(mode){
 
 function runMultInnings(team)
 {
-  var numInns = document.getElementById('numInnBoxid').value 
+  var numInns = document.getElementById('numInnBoxid').value
   var runs = 0;
   var hits = 0;
   var hitLog = [];
@@ -197,14 +197,14 @@ function runSimInning(mode,team,currentBatter)
   var runs=0;
   var hitType=0;
   var hitterNum = currentBatter;
-  var baseState=[0,0,0]; 
+  var baseState=[0,0,0];
   var batterStats = [];
   batterStats = getLineup(team);
   if(batterStats == false)
     return;
 
   while(outs < 3)
-    { 
+    {
       var battingAverage = batterStats[hitterNum][0];
       var onBasePerc = batterStats[hitterNum][1];
       if(simAtBat(onBasePerc))
@@ -223,7 +223,7 @@ function runSimInning(mode,team,currentBatter)
         var innStats = [hits, runs, hitterNum];
         return innStats;
       }
-      else 
+      else
         {
           document.getElementById('numHitsBoxid').value = hits;
           document.getElementById('numOutsBoxid').value = outs;
@@ -288,7 +288,7 @@ function checkBatterStats(battingAverage,OBP)
       alert("OBP > BA for one batter");
       return false;
     }
-    else 
+    else
       return true;
 }
 
@@ -305,7 +305,7 @@ function determineHitType(percentWalks)
   if(checkIfWalk(percentWalks)) return 1;
 
   var roll = Math.random();
-  roll *= 10.; 
+  roll *= 10.;
   if(roll > 9.5)
     return 4;
   if(roll > 9)
@@ -322,7 +322,7 @@ function checkIfWalk(percentWalks)
     {
       return true;
     }
-    else 
+    else
       return false;
 }
 
