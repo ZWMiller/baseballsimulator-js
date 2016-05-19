@@ -1,10 +1,8 @@
-function onOpen()
-{
+function onOpen() {
   setDefaultValues();
 }
 
-function setToAverage(team)
-{
+function setToAverage(team) {
   switch (team) {
     case 1:
       var startNum = 1;
@@ -23,8 +21,7 @@ function setToAverage(team)
   }
 }
 
-function setDefaultValues()
-{
+function setDefaultValues() {
   for(var team = 1; team<=2; team++){
     setToAverage(team)
 
@@ -39,7 +36,7 @@ function setDefaultValues()
   document.getElementById('gameRecord').value = "0-0";
 }
 
-function updateRecord(winningTeam){
+function updateRecord(winningTeam) {
  var record = document.getElementById('gameRecord').value;
  var arr = record.split("-");
  if(winningTeam==1)
@@ -49,35 +46,33 @@ function updateRecord(winningTeam){
  document.getElementById('gameRecord').value = arr[0]+"-"+arr[1];
 }
 
-function clearRecord(){
+function clearRecord() {
   document.getElementById('gameRecord').value = "0-0";
 }
 
-function runSimAtBat()
-{
+function runSimAtBat() {
   var hits=0;
   var outs=0;
   var battingAverage = document.getElementById('batAverageBoxid1').value;
   var onBasePerc = document.getElementById('onBasePercBoxid1').value;
 
   if(!checkBatterStats(battingAverage,onBasePerc)) return false;
-  for(var i=0; i<document.getElementById('numSimBoxid').value; i++)
-    {
-      if(simAtBat(onBasePerc))
-        hits++;
-      else
-        outs++;
-    };
+  for(var i=0; i<document.getElementById('numSimBoxid').value; i++) {
+    if(simAtBat(onBasePerc))
+      hits++;
+    else
+      outs++;
+  };
 
-    document.getElementById('numHitsBoxid').value = hits;
-    document.getElementById('numOutsBoxid').value = outs;
-    document.getElementById('numRunsBoxid').value = "X X X";
+  document.getElementById('numHitsBoxid').value = hits;
+  document.getElementById('numOutsBoxid').value = outs;
+  document.getElementById('numRunsBoxid').value = "X X X";
 }
 
 function simulateMultGame(games){
   var runs1 = [];
   var runs2 = [];
-  for(var gamenum=0;gamenum<games;gamenum++){
+  for(var gamenum=0;gamenum<games;gamenum++) {
     var temp = simulateGame(1);
     runs1.push(temp[0]);
     runs2.push(temp[1]);
@@ -97,27 +92,27 @@ function simulateMultGame(games){
   makeHisto(runs2,"Team 2 Score","imageOut2");
 }
 
-function average(inp){
+function average(inp) {
   var sum = 0;
-  for(var i=0; i<inp.length; i++){
+  for(var i=0; i<inp.length; i++) {
     sum+=inp[i];
   }
   return (sum/inp.length);
 }
 
-function clearHists(){
+function clearHists() {
   d3.selectAll("svg").remove();
 }
 
-function simulateGame(mode){
+function simulateGame(mode) {
   var runs = [0,0];
   var runLog = [];
   var inning = 1;
   var currentBatterNumber = [0,0];
-  while(inning <= 9 || (runs[0] == runs[1])){
-    for(var team=1; team<=2; team++){
+  while(inning <= 9 || (runs[0] == runs[1])) {
+    for(var team=1; team<=2; team++) {
       var temp = runSimInning(1,team,currentBatterNumber[team-1]);
-      if(temp == "exit"){
+      if(temp == "exit") {
         alert("runSimInning Failed. Exit.");
         return;
       }
@@ -133,49 +128,43 @@ function simulateGame(mode){
     updateRecord(1);
   if(runs[1] > runs[0])
     updateRecord(2);
-  if(mode == 1){
+  if(mode == 1) {
     return runs;
   }
 }
 
-function runMultInnings(team)
-{
+function runMultInnings(team) {
   var numInns = document.getElementById('numInnBoxid').value
   var runs = 0;
   var hits = 0;
   var hitLog = [];
   var runLog = [];
   var simCount = 0;
-  for(var i=0; i<numInns; i++)
-    {
-      var temp = runSimInning(1,team,0);
-      if(temp == "exit")
-        return;
-      hits += temp[0];
-      runs += temp[1];
-      hitLog.push(temp[0]);
-      runLog.push(temp[1]);
-      simCount++;
-    }
-    if(simCount > 0)
-      {
-        document.getElementById('numHitsBoxid').value = hits/simCount;
-        document.getElementById('numRunsBoxid').value = runs/simCount;
-        document.getElementById('numOutsBoxid').value = "X X X";
-      }
-      else
-        {
-          document.getElementById('numHitsBoxid').value = "X X X";
-          document.getElementById('numRunsBoxid').value = "X X X";
-        }
-        clearHists();
-        makeHisto(hitLog,"Hits in the Inning","imageOut");
-        makeHisto(runLog,"Runs in the Inning","imageOut2");
+  for(var i=0; i<numInns; i++) {
+    var temp = runSimInning(1,team,0);
+    if(temp == "exit")
+      return;
+    hits += temp[0];
+    runs += temp[1];
+    hitLog.push(temp[0]);
+    runLog.push(temp[1]);
+    simCount++;
+  }
+  if(simCount > 0) {
+    document.getElementById('numHitsBoxid').value = hits/simCount;
+    document.getElementById('numRunsBoxid').value = runs/simCount;
+    document.getElementById('numOutsBoxid').value = "X X X";
+  } else {
+    document.getElementById('numHitsBoxid').value = "X X X";
+    document.getElementById('numRunsBoxid').value = "X X X";
+  }
+  clearHists();
+  makeHisto(hitLog,"Hits in the Inning","imageOut");
+  makeHisto(runLog,"Runs in the Inning","imageOut2");
 }
 
-function makeHisto(data,title,division)
-{
-    d3.select("#"+division)
+function makeHisto(data,title,division) {
+  d3.select("#"+division)
     .datum(data)
     .call(histogramChart(title)
     .bins(Math.max.apply(Math, data))
@@ -198,63 +187,51 @@ function runSimInning(mode,team,currentBatter)
   if(batterStats == false)
     return;
 
-  while(outs < 3)
-    {
-      var battingAverage = batterStats[hitterNum][0];
-      var onBasePerc = batterStats[hitterNum][1];
-      if(simAtBat(onBasePerc))
-        {
-          hits++;
-          hitType = determineHitType((onBasePerc-battingAverage)/onBasePerc);
-          runs += moveRunners(hitType, baseState);
-        }
-        else
-          outs++;
-        if(++hitterNum >= batterStats.length)
-          hitterNum = 0;
+  while(outs < 3) {
+    var battingAverage = batterStats[hitterNum][0];
+    var onBasePerc = batterStats[hitterNum][1];
+    if(simAtBat(onBasePerc)) {
+      hits++;
+      hitType = determineHitType((onBasePerc-battingAverage)/onBasePerc);
+      runs += moveRunners(hitType, baseState);
+    } else {
+      outs++;
     }
-    if(mode == 1)
-      {
-        var innStats = [hits, runs, hitterNum];
-        return innStats;
-      }
-      else
-        {
-          document.getElementById('numHitsBoxid').value = hits;
-          document.getElementById('numOutsBoxid').value = outs;
-          document.getElementById('numRunsBoxid').value = runs;
-        }
-
+    if(++hitterNum >= batterStats.length)
+      hitterNum = 0;
+  }
+  if(mode == 1) {
+    var innStats = [hits, runs, hitterNum];
+    return innStats;
+  } else {
+    document.getElementById('numHitsBoxid').value = hits;
+    document.getElementById('numOutsBoxid').value = outs;
+    document.getElementById('numRunsBoxid').value = runs;
+  }
 }
 
-function checkValidTeam(team){
-
-  if(team != 1 && team != 2){
+function checkValidTeam(team) {
+  if(team != 1 && team != 2) {
     alert("Bad Team Selection. Internal Problem. Default to 1.");
     team = 1;
   }
   return team;
 }
 
-function lineupFailure()
-{
+function lineupFailure() {
   document.getElementById('numHitsBoxid').value = "Invalid Lineup";
   document.getElementById('numOutsBoxid').value = "Invalid Lineup";
   document.getElementById('numRunsBoxid').value = "Invalid Lineup";
-
 }
 
-function getLineup(team)
-{
-  if(team == 1){
+function getLineup(team) {
+  if(team == 1) {
     var startNum = 1;
     var endNum = 9;
-  }
-  else if(team == 2){
+  } else if(team == 2) {
     var startNum = 10;
     var endNum = 18;
-  }
-  else{
+  } else {
     lineupFailure();
     return false;
   }
@@ -263,7 +240,7 @@ function getLineup(team)
   for (var i = startNum; i <= endNum; i++) {
     var avg = document.getElementById('batAverageBoxid'+i).value;
     var obp = document.getElementById('onBasePercBoxid'+i).value;
-    if(!checkBatterStats(avg,obp)){
+    if(!checkBatterStats(avg,obp)) {
       lineupFailure();
       return false;
     }
@@ -272,31 +249,26 @@ function getLineup(team)
   return batterStats;
 }
 
-function checkBatterStats(battingAverage,OBP)
-{
-  if(0 > battingAverage || battingAverage >= 1 || 0 > OBP || OBP >= 1)
-    {
-      alert("Batting Average & On Base Percentage between (0,1) please.");
-      return false;
-    }
-    else if (battingAverage > OBP){
-      alert("OBP > BA for one batter");
-      return false;
-    }
-    else
-      return true;
+function checkBatterStats(battingAverage,OBP) {
+  if(0 > battingAverage || battingAverage >= 1 || 0 > OBP || OBP >= 1) {
+    alert("Batting Average & On Base Percentage between (0,1) please.");
+    return false;
+  } else if (battingAverage > OBP){
+    alert("OBP > BA for one batter");
+    return false;
+  } else {
+    return true;
+  }
 }
 
-function simAtBat(OBP)
-{
+function simAtBat(OBP) {
   if(Math.random() < OBP)
     return true;
   else
     return false;
 }
 
-function determineHitType(percentWalks)
-{
+function determineHitType(percentWalks) {
   if(checkIfWalk(percentWalks)) return 1;
 
   var roll = Math.random();
@@ -311,36 +283,30 @@ function determineHitType(percentWalks)
     return 1;
 }
 
-function checkIfWalk(percentWalks)
-{
-  if(Math.random() < percentWalks)
-    {
-      return true;
-    }
-    else
-      return false;
+function checkIfWalk(percentWalks) {
+  if(Math.random() < percentWalks) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
-function moveRunners(hit,baseState)
-{
+function moveRunners(hit,baseState) {
   var runs=0;
-  for(var i=0; i<hit; i++)
-    {
-      for(var base=2; base>=0; base--)
-        {
-          if(base == 2 && baseState[base] == 1)
-            {
-              runs++;
-              baseState[base] = baseState[base-1];
-            }
-            if(base == 0 && i == 0)
-              baseState[base] = 1;
-            else if(base == 0)
-              baseState[base] = 0;
-            else
-              baseState[base] = baseState[base-1];
-            //alert(base+" "+baseState[base])
-        }
+  for(var i=0; i<hit; i++) {
+    for(var base=2; base>=0; base--) {
+      if(base == 2 && baseState[base] == 1) {
+        runs++;
+        baseState[base] = baseState[base-1];
+      }
+      if(base == 0 && i == 0)
+        baseState[base] = 1;
+      else if(base == 0)
+        baseState[base] = 0;
+      else
+        baseState[base] = baseState[base-1];
+      //alert(base+" "+baseState[base])
     }
-    return runs;
+  }
+  return runs;
 }
