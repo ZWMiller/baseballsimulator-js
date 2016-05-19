@@ -5,13 +5,15 @@ function onOpen()
 
 function setToAverage(team)
 {
-  if(team == 1){
-    var startNum = 1;
-    var endNum = 9;
-  }
-  else if(team == 2){
-    var startNum = 10;
-    var endNum = 18;
+  switch (team) {
+    case 1:
+      var startNum = 1;
+      var endNum = 9;
+      break;
+    case 2:
+      var startNum = 10;
+      var endNum = 18;
+      break;
   }
 
   var batterStats = [];
