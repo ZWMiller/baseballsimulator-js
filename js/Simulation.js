@@ -42,6 +42,7 @@ function setDefaultValues()
   document.getElementById('numSimBoxid').value = 10;
   document.getElementById('numInnBoxid').value = 1000;
   document.getElementById('gameRecord').value = "0-0";
+  document.getElementById('gameNum').value = 162;
 }
 
 function updateRecord(winningTeam){
@@ -79,9 +80,12 @@ function runSimAtBat()
     document.getElementById('numRunsBoxid').value = "X X X";
 }
 
-function simulateMultGame(games){
+function simulateMultGame(){
   var runs1 = [];
   var runs2 = [];
+  var games =  document.getElementById('gameNum').value;
+  if(!isNumber(games))
+    games = 1;
   for(var gamenum=0;gamenum<games;gamenum++){
     var temp = simulateGame(1);
     runs1.push(temp[0]);
@@ -91,10 +95,10 @@ function simulateMultGame(games){
   var allRunAv = average(allRuns);
   var r1Av = average(runs1);
   var r2Av = average(runs2);
-  document.getElementById('team1Score').value = r1Av;
-  document.getElementById('team2Score').value = r2Av;
+  document.getElementById('team1Score').value = r1Av.toFixed(2);
+  document.getElementById('team2Score').value = r2Av.toFixed(2);
   document.getElementById('numHitsBoxid').value = "X X X";
-  document.getElementById('numRunsBoxid').value = allRunAv;
+  document.getElementById('numRunsBoxid').value = allRunAv.toFixed(2);
   document.getElementById('numOutsBoxid').value = "X X X";
 
   clearHists();
@@ -348,4 +352,8 @@ function moveRunners(hit,baseState)
         }
     }
     return runs;
+}
+
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 }
