@@ -24,11 +24,6 @@ function setToAverage(team) {
 function setDefaultValues() {
   for(var team = 1; team<=2; team++){
     setToAverage(team)
-
-    for (var i = startNum; i <= endNum; i++) {
-      document.getElementById('batAverageBoxid'+i).value = 0.25;
-      document.getElementById('onBasePercBoxid'+i).value = 0.3;
-    }
   }
 
   document.getElementById('numSimBoxid').value = 10;
