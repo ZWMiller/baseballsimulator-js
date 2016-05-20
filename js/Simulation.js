@@ -14,14 +14,24 @@ function createTeams() {
 function createTeamOne() {
   return {
     firstPlayerNumber: 1,
-    lastPlayerNumber: 9
+    lastPlayerNumber: 9,
+    batters: [],
+    pitcher: [],
+    currentHitterId: 0,
+    score: 0,
+    gameRecord: 0
   }
 }
 
 function createTeamTwo() {
   return {
     firstPlayerNumber: 10,
-    lastPlayerNumber: 18
+    lastPlayerNumber: 18,
+    batters: [],
+    pitcher: [],
+    currentHitterId: 0,
+    score: 0,
+    gameRecord: 0
   }
 }
 
@@ -53,8 +63,6 @@ function setDefaultValues() {
 
 function updateRecord(winningTeam) {
   winningTeam.gameRecord++;
-
-  renderGameRecord();
 }
 
 function clearGameRecord() {
@@ -65,14 +73,15 @@ function clearGameRecord() {
 }
 
 function renderGameRecord() {
-  teamOneRecord = teamOne().gameRecord;
-  teamTwoRecord = teamTwo().gameRecord;
+  var teamOneRecord = teamOne().gameRecord;
+  var teamTwoRecord = teamTwo().gameRecord;
   document.getElementById('gameRecord').value = `${teamOneRecord}-${teamTwoRecord}`;
 }
 
 function runSimAtBat() {
   var hits=0;
   var outs=0;
+  getLineup(teamOne());
   var battingAverage = document.getElementById('batAverageBoxid1').value;
   var onBasePerc = document.getElementById('onBasePercBoxid1').value;
 
@@ -89,17 +98,34 @@ function runSimAtBat() {
   document.getElementById('numRunsBoxid').value = "X X X";
 }
 
+function getProgressBarOptions(){
+  return {
+    classname: 'pBar',
+    id: 'pBarId',
+    //target: document.getElementById('progressBarId')
+  }
+}
+
 function simulateMultGame(){
   var runs1 = [];
   var runs2 = [];
   var games =  document.getElementById('gamesToSimNumid').value;
+  var progressBarOptions = getProgressBarOptions();
+  var nanoBar = new Nanobar(progressBarOptions);
+  var progressPerc = 0;
   if(!isNumber(games))
     games = 1;
   for(var gamenum=0;gamenum<games;gamenum++){
-    var temp = simulateGame(1);
-    runs1.push(temp[0]);
-    runs2.push(temp[1]);
+    nanoBar.go(1);
+    simulateGame();
+    runs1.push(teamOne().score);
+    runs2.push(teamTwo().score);
+    progressPerc = (gamenum/games) * 100;
+    if(progressPerc > 1)
+      nanoBar.go(progressPerc);
   }
+  nanoBar.go(100);
+  renderGameRecord();
   var allRuns = runs1.concat(runs2);
   var allRunAv = average(allRuns);
   var r1Av = average(runs1);
@@ -127,33 +153,35 @@ function clearHists() {
   d3.selectAll("svg").remove();
 }
 
-function simulateGame(mode) {
-  var runs = [0,0];
-  var runLog = [];
+function resetTeamsForGame(){
+  teamOne().score = 0;
+  teamOne().currentHitterId = 0;
+  teamTwo().score = 0;
+  teamTwo().currentHitterId = 0;
+}
+
+function simulateGame() {
+  resetTeamsForGame();
   var inning = 1;
-  var currentBatterNumber = [0,0];
-  while(inning <= 9 || (runs[0] == runs[1])) {
-    for(var team=1; team<=2; team++) {
-      var temp = runSimInning(1,team,currentBatterNumber[team-1]);
+  while(inning <= 9 || (teamOne().score == teamTwo().score)) {
+    for(var team of simulationData.teams) {
+      var temp = runSimInning(1,team);
       if(temp == "exit") {
         alert("runSimInning Failed. Exit.");
         return;
       }
-
-      runs[team-1] += temp[1];
-      currentBatterNumber[team-1] = temp[2];
+      team.score += temp.runs;
     }
     inning++;
   }
-  document.getElementById('team1Score').value = runs[0];
-  document.getElementById('team2Score').value = runs[1];
-  if(runs[0] > runs[1])
+  if(teamOne().score > teamTwo().score)
     updateRecord(teamOne());
-  if(runs[1] > runs[0])
+  if(teamOne().score < teamTwo().score)
     updateRecord(teamTwo());
-  if(mode == 1) {
-    return runs;
-  }
+}
+
+function simMultInnings(team){
+  runMultInnings(simulationData.teams[team-1]);
 }
 
 function runMultInnings(team) {
@@ -164,13 +192,13 @@ function runMultInnings(team) {
   var runLog = [];
   var simCount = 0;
   for(var i=0; i<numInns; i++) {
-    var temp = runSimInning(1,team,0);
+    var temp = runSimInning(1,team);
     if(temp == "exit")
       return;
-    hits += temp[0];
-    runs += temp[1];
-    hitLog.push(temp[0]);
-    runLog.push(temp[1]);
+    hits += temp.hits;
+    runs += temp.runs;
+    hitLog.push(temp.hits);
+    runLog.push(temp.runs);
     simCount++;
   }
   if(simCount > 0) {
@@ -195,81 +223,66 @@ function makeHisto(data,title,division) {
   $("svg").css({top: 20, left: 80, padding: 20, position:'relative'});
 }
 
-function runSimInning(mode,team,currentBatter)
+function runSimInning(mode,team)
 {
-  team = checkValidTeam(team);
-
   var hits=0;
   var outs=0;
   var runs=0;
   var hitType=0;
-  var hitterNum = currentBatter;
   var baseState=[0,0,0];
   var batterStats = [];
-  batterStats = getLineup(team);
-  if(batterStats == false)
-    return;
-
-  while(outs < 3) {
-    var battingAverage = batterStats[hitterNum][0];
-    var onBasePerc = batterStats[hitterNum][1];
+  getLineup(team);
+   var innStats = {
+      hits: 0, 
+      runs: 0,
+      outs: 0
+    };
+  while(innStats.outs < 3) {
+    var battingAverage = team.batters[team.currentHitterId].average;
+    var onBasePerc = team.batters[team.currentHitterId].onbasepercentage;
+    //alert(team.batters[team.currentHitterId].onbasepercentage +" "+ team.batters[team.currentHitterId].average);
     if(simAtBat(onBasePerc)) {
-      hits++;
+      innStats.hits++;
       hitType = determineHitType((onBasePerc-battingAverage)/onBasePerc);
-      runs += moveRunners(hitType, baseState);
+      innStats.runs += moveRunners(hitType, baseState);
     } else {
-      outs++;
+      innStats.outs++;
     }
-    if(++hitterNum >= batterStats.length)
-      hitterNum = 0;
+    if(++team.currentHitterId >= team.batters.length)
+      team.currentHitterId = 0;
   }
   if(mode == 1) {
-    var innStats = [hits, runs, hitterNum];
-    return innStats;
-  } else {
+   return innStats;
+  } 
+  else {
     document.getElementById('numHitsBoxid').value = hits;
     document.getElementById('numOutsBoxid').value = outs;
     document.getElementById('numRunsBoxid').value = runs;
   }
 }
 
-function checkValidTeam(team) {
-  if(team != 1 && team != 2) {
-    alert("Bad Team Selection. Internal Problem. Default to 1.");
-    team = 1;
-  }
-  return team;
-}
-
 function lineupFailure() {
+  clearHists();
   document.getElementById('numHitsBoxid').value = "Invalid Lineup";
   document.getElementById('numOutsBoxid').value = "Invalid Lineup";
   document.getElementById('numRunsBoxid').value = "Invalid Lineup";
 }
 
 function getLineup(team) {
-  if(team == 1) {
-    var startNum = 1;
-    var endNum = 9;
-  } else if(team == 2) {
-    var startNum = 10;
-    var endNum = 18;
-  } else {
-    lineupFailure();
-    return false;
-  }
-
   var batterStats = [];
-  for (var i = startNum; i <= endNum; i++) {
-    var avg = document.getElementById('batAverageBoxid'+i).value;
-    var obp = document.getElementById('onBasePercBoxid'+i).value;
+  for (var currentPlayerNumber = team.firstPlayerNumber; currentPlayerNumber <= team.lastPlayerNumber; currentPlayerNumber++){
+    var avg = document.getElementById('batAverageBoxid'+currentPlayerNumber).value;
+    var obp = document.getElementById('onBasePercBoxid'+currentPlayerNumber).value;
     if(!checkBatterStats(avg,obp)) {
       lineupFailure();
       return false;
     }
-    batterStats.push([avg,obp]);
+    batterStats.push({ 
+      average: avg,
+      onbasepercentage: obp
+    });
   }
-  return batterStats;
+  team.batters = batterStats;
 }
 
 function checkBatterStats(battingAverage,OBP) {

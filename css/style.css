@@ -147,3 +147,16 @@ p { padding-left: 15px; }
 #info-nav li.current a {
   color: #FFFFFF;
 }
+
+.nanobar {
+  width: 100%;
+  height: 4px;
+  z-index: 9999;
+  top:0
+}
+.bar {
+  width: 0;
+  height: 100%;
+  transition: height .3s;
+  background:#DDDDDD;
+}
