@@ -282,7 +282,7 @@ function runSimInning(mode,team)
     team.batters[team.currentHitterId].atbatsincurrentsim++;
     if(simAtBat(onBasePerc)) {
       innStats.hits++;
-      hitType = determineHitType(team);
+      hitType = determineHitType(team.batters[team.currentHitterId]);
       innStats.runs += moveRunners(hitType, baseState);
       team.batters[team.currentHitterId].hitsincurrentsim++;
     } else {
@@ -327,17 +327,17 @@ function simAtBat(OBP) {
     return false;
 }
 
-function determineHitType(team) {
-  var currentHitter = team.currentHitterId;
-  var obp = team.batters[currentHitter].onbasepercentage;
-  var batavg = team.batters[currentHitter].battingaverage;
-  var slg = team.batters[currentHitter].sluggingpercentage;
-  var hrp = team.batters[currentHitter].homerunpercentage;
+function determineHitType(batter) {
+  var obp = batter.onbasepercentage;
+  var batavg = batter.battingaverage;
+  var slg = batter.sluggingpercentage;
+  var hrp = batter.homerunpercentage;
   var percentWalks = (obp-batavg)/obp;
   var iso = slg - batavg;
   var tripOdds = (slg - (hrp*batavg*4))*.05+hrp;
   var doubOdds = (slg - (hrp*batavg*4))*.25+hrp+tripOdds;
-  if(checkIfWalk(percentWalks)) return 1;
+  if(checkIfWalk(percentWalks)) 
+    return 1;
 
   var roll = Math.random();
 
