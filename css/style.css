@@ -52,7 +52,9 @@ form {
 }
 
 #info #gameSim input{
-  width: 400px;
+  width: 350px;
+  left: 0px;
+  font-weight: bold;
 }
 
 #banner img {
@@ -97,6 +99,7 @@ input[type=button]:hover {
 td {
     padding:0 15px 0 15px;
     vertical-align: top;
+    float: left;
 }
 
 p { padding-left: 15px; }
