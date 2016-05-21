@@ -48,6 +48,8 @@ function getLineup(team) {
   for (var currentPlayerNumber = team.firstPlayerNumber; currentPlayerNumber <= team.lastPlayerNumber; currentPlayerNumber++){
     var avg = document.getElementById('batAverageBoxid'+currentPlayerNumber).value;
     var obp = document.getElementById('onBasePercBoxid'+currentPlayerNumber).value;
+    var hrp = document.getElementById('homeRunPercBoxid'+currentPlayerNumber).value;
+    var slg = document.getElementById('sluggingPercBoxid'+currentPlayerNumber).value;
     if(!checkBatterStats(avg,obp)) {
       lineupFailure();
       return false;
@@ -55,10 +57,10 @@ function getLineup(team) {
     batterStats.push({ 
       average: avg,
       onbasepercentage: obp,
-      sluggingpercentage: 1,
+      sluggingpercentage: slg,
+      homerunpercentage:  hrp,
       doubles:    1,
       triples:    1,
-      homeruns:   1,
       hits:       1,
       atbats:     1,
       walks:      1,
@@ -84,6 +86,14 @@ function setToAverage(team) {
   for (var currentPlayerNumber = team.firstPlayerNumber; currentPlayerNumber <= team.lastPlayerNumber; currentPlayerNumber++) {
     document.getElementById("batAverageBoxid"+currentPlayerNumber).value = 0.25;
     document.getElementById("onBasePercBoxid"+currentPlayerNumber).value = 0.3;
+    if(team == teamOne()){
+      document.getElementById('sluggingPercBoxid'+currentPlayerNumber).value = 0.40;
+      document.getElementById('homeRunPercBoxid'+currentPlayerNumber).value = 0.10;
+    }
+    else{
+      document.getElementById('sluggingPercBoxid'+currentPlayerNumber).value = 0.60;
+      document.getElementById('homeRunPercBoxid'+currentPlayerNumber).value = 0.15;
+    }
   }
 }
 
@@ -139,10 +149,10 @@ function runSimAtBat() {
 }
 
 function simulateMultGame(){
-   var simStats = {
-     runs1: [],
-     runs2: [],
-     games: document.getElementById('gamesToSimNumid').value
+  var simStats = {
+    runs1: [],
+    runs2: [],
+    games: document.getElementById('gamesToSimNumid').value
   }
   if(!isNumber(simStats.games))
     simStats.games = 1;
@@ -204,9 +214,9 @@ function simulateGame() {
     inning++;
   }
   if(teamOne().score > teamTwo().score)
-    updateRecord(teamOne());
+  updateRecord(teamOne());
   if(teamOne().score < teamTwo().score)
-    updateRecord(teamTwo());
+  updateRecord(teamTwo());
 }
 
 function simMultInnings(team){
@@ -261,18 +271,18 @@ function runSimInning(mode,team)
   var baseState=[0,0,0];
   var batterStats = [];
   getLineup(team);
-   var innStats = {
-      hits: 0, 
-      runs: 0,
-      outs: 0
-    };
+  var innStats = {
+    hits: 0, 
+    runs: 0,
+    outs: 0
+  };
   while(innStats.outs < 3) {
     var battingAverage = team.batters[team.currentHitterId].average;
     var onBasePerc = team.batters[team.currentHitterId].onbasepercentage;
-      team.batters[team.currentHitterId].atbatsincurrentsim++;
+    team.batters[team.currentHitterId].atbatsincurrentsim++;
     if(simAtBat(onBasePerc)) {
       innStats.hits++;
-      hitType = determineHitType((onBasePerc-battingAverage)/onBasePerc);
+      hitType = determineHitType(team);
       innStats.runs += moveRunners(hitType, baseState);
       team.batters[team.currentHitterId].hitsincurrentsim++;
     } else {
@@ -282,7 +292,7 @@ function runSimInning(mode,team)
       team.currentHitterId = 0;
   }
   if(mode == 1) {
-   return innStats;
+    return innStats;
   } 
   else {
     document.getElementById('numHitsBoxid').value = hits;
@@ -317,16 +327,25 @@ function simAtBat(OBP) {
     return false;
 }
 
-function determineHitType(percentWalks) {
+function determineHitType(team) {
+  var currentHitter = team.currentHitterId;
+  var obp = team.batters[currentHitter].onbasepercentage;
+  var batavg = team.batters[currentHitter].battingaverage;
+  var slg = team.batters[currentHitter].sluggingpercentage;
+  var hrp = team.batters[currentHitter].homerunpercentage;
+  var percentWalks = (obp-batavg)/obp;
+  var iso = slg - batavg;
+  var tripOdds = (slg - (hrp*batavg*4))*.05+hrp;
+  var doubOdds = (slg - (hrp*batavg*4))*.25+hrp+tripOdds;
   if(checkIfWalk(percentWalks)) return 1;
 
   var roll = Math.random();
-  roll *= 10.;
-  if(roll > 9.5)
+
+  if(roll < hrp)
     return 4;
-  if(roll > 9)
+  if(roll < tripOdds)
     return 3;
-  if(roll > 6)
+  if(roll > doubOdds)
     return 2;
   else
     return 1;
