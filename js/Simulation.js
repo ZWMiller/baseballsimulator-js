@@ -19,7 +19,8 @@ function createTeamOne() {
     pitchers: [],
     currentHitterId: 0,
     score: 0,
-    gameRecord: 0
+    gameRecord: 0,
+    name: 'Team1'
   }
 }
 
@@ -31,7 +32,8 @@ function createTeamTwo() {
     pitchers: [],
     currentHitterId: 0,
     score: 0,
-    gameRecord: 0
+    gameRecord: 0,
+    name: 'Team2'
   }
 }
 
@@ -46,14 +48,15 @@ function teamTwo() {
 function getLineup(team) {
   var batterStats = [];
   for (var currentPlayerNumber = team.firstPlayerNumber; currentPlayerNumber <= team.lastPlayerNumber; currentPlayerNumber++){
-    var atbats = parseInt(document.getElementById('atBatBoxid'+currentPlayerNumber).value);
+    var plateappearances = parseInt(document.getElementById('plateAppearanceBoxid'+currentPlayerNumber).value);
     var hits = parseInt(document.getElementById('hitsBoxid'+currentPlayerNumber).value);
     var doubles = parseInt(document.getElementById('doublesBoxid'+currentPlayerNumber).value);
     var triples = parseInt(document.getElementById('triplesBoxid'+currentPlayerNumber).value);
     var homeruns = parseInt(document.getElementById('homeRunBoxid'+currentPlayerNumber).value);
     var walks = parseInt(document.getElementById('baseOnBallBoxid'+currentPlayerNumber).value);
+    var atbats = plateappearances - walks;
     var battingAverage = hits/atbats;
-    var obp = (hits+walks)/atbats;
+    var obp = (hits+walks)/plateappearances;
     var slg = ((hits - doubles - triples - homeruns)+(2*doubles) + (3*triples) + (4*homeruns))/atbats;
     var iso = slg/battingAverage;
     if(!checkBatterStats(battingAverage,obp)) {
@@ -65,6 +68,7 @@ function getLineup(team) {
       triples: triples,
       hits: hits,
       atbats: atbats,
+      plateappearances: plateappearances,
       walks: walks,
       homeruns: homeruns,
       battingaverage: battingAverage,
@@ -88,33 +92,63 @@ function getLineup(team) {
   team.batters = batterStats;
   team.pitchers = pitcherStats;
 }
+function setToReference(teamNum){
+  var team = simulationData.teams[teamNum-1];
+  var pa  = document.getElementById('plateAppearanceBox'+team.name).value;
+  var hit = document.getElementById('hitsBox'+team.name).value;
+  var dbl = document.getElementById('doublesBox'+team.name).value;
+  var tpl = document.getElementById('triplesBox'+team.name).value;
+  var hr  = document.getElementById('homeRunBox'+team.name).value;
+  var bb  = document.getElementById('baseOnBallBox'+team.name).value;
+
+  for (var currentPlayerNumber = team.firstPlayerNumber; currentPlayerNumber <= team.lastPlayerNumber; currentPlayerNumber++) {
+    document.getElementById('plateAppearanceBoxid'+currentPlayerNumber).value = pa;
+    document.getElementById('hitsBoxid'+currentPlayerNumber).value = hit;
+    document.getElementById('doublesBoxid'+currentPlayerNumber).value = dbl;
+    document.getElementById('triplesBoxid'+currentPlayerNumber).value = tpl;
+    document.getElementById('homeRunBoxid'+currentPlayerNumber).value = hr;
+    document.getElementById('baseOnBallBoxid'+currentPlayerNumber).value = bb;
+  }
+}
+
+function setReferenceValues(team){
+  var teamId = team.name;
+  document.getElementById('plateAppearanceBox'+teamId).value = 600;
+  document.getElementById('hitsBox'+teamId).value = 134;
+  document.getElementById('doublesBox'+teamId).value = 27;
+  document.getElementById('triplesBox'+teamId).value = 3;
+  document.getElementById('homeRunBox'+teamId).value = 16;
+  document.getElementById('baseOnBallBox'+teamId).value = 55;
+
+}
 
 function setToAverage(team) {
   for (var currentPlayerNumber = team.firstPlayerNumber; currentPlayerNumber <= team.lastPlayerNumber; currentPlayerNumber++) {
     if(team == teamOne())
       {
-        document.getElementById('atBatBoxid'+currentPlayerNumber).value = 533;
+        document.getElementById('plateAppearanceBoxid'+currentPlayerNumber).value = 600;
         document.getElementById('hitsBoxid'+currentPlayerNumber).value = 134;
         document.getElementById('doublesBoxid'+currentPlayerNumber).value = 27;
         document.getElementById('triplesBoxid'+currentPlayerNumber).value = 3;
         document.getElementById('homeRunBoxid'+currentPlayerNumber).value = 16;
-        document.getElementById('baseOnBallBoxid'+currentPlayerNumber).value = 52;
+        document.getElementById('baseOnBallBoxid'+currentPlayerNumber).value = 55;
       }
-    if(team == teamTwo())
-      {
-        document.getElementById('atBatBoxid'+currentPlayerNumber).value = 533;
-        document.getElementById('hitsBoxid'+currentPlayerNumber).value = 134;
-        document.getElementById('doublesBoxid'+currentPlayerNumber).value = 35;
-        document.getElementById('triplesBoxid'+currentPlayerNumber).value = 5;
-        document.getElementById('homeRunBoxid'+currentPlayerNumber).value = 18;
-        document.getElementById('baseOnBallBoxid'+currentPlayerNumber).value = 50;
-      }
+      if(team == teamTwo())
+        {
+          document.getElementById('plateAppearanceBoxid'+currentPlayerNumber).value = 600;
+          document.getElementById('hitsBoxid'+currentPlayerNumber).value = 134;
+          document.getElementById('doublesBoxid'+currentPlayerNumber).value = 27;
+          document.getElementById('triplesBoxid'+currentPlayerNumber).value = 3;
+          document.getElementById('homeRunBoxid'+currentPlayerNumber).value = 18;
+          document.getElementById('baseOnBallBoxid'+currentPlayerNumber).value = 55;
+        }
   }
 }
 
 function setDefaultValues() {
   for(var team of simulationData.teams) {
     setToAverage(team)
+    setReferenceValues(team);
   }
 
   document.getElementById('numSimBoxid').value = 10;

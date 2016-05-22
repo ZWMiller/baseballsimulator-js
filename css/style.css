@@ -8,7 +8,7 @@ form {
   background: linear-gradient(bottom, #DDDDDD, #EEEEEE 175px);
   /*margin: auto;*/
   position: relative;
-  width: 406px;
+  width: 419px;
   height: 215px;
   font-family: Tahoma, Geneva, sans-serif;
   font-size: 14px;
@@ -33,7 +33,7 @@ form {
   background: linear-gradient(bottom, #DDDDDD, #EEEEEE 175px);
   /*margin: auto;*/
   position: relative;
-  width: 875px;
+  width: 895px;
   height: 1450px;
   font-family: Tahoma, Geneva, sans-serif;
   font-size: 14px;
@@ -58,8 +58,9 @@ form {
 }
 
 #banner img {
-    width:910px;
+    width:915px;
     max-height:175px;
+    padding-left:15px;
 }
 
 #imageOut {

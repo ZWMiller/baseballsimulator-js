@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $('#batterFormid2, #gameSim').hide();
+  $('#batterFormid2, #gameSim, #setAllValues').hide();
 
   $('#info-nav li').click(function(e) {
     $('#info .hide').hide();

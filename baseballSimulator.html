@@ -36,7 +36,7 @@
             <form name="simControls" action="" method="POST">
               Num At Bat Sims: <input type="text" id="numSimBoxid" name="numSimBox"><br/>
               Num Inning Sims: <input type="text" id="numInnBoxid" name="numInnBox"><br/>
-              <input type="button" name="AtBat" value="Sim At Bats" onclick="runSimAtBat()" />
+              <input type="button" name="AtBat" value="Sim Plate Appearances" onclick="runSimAtBat()" />
               <input type="button" name="clearHistograms" value="Clear Hists" onclick="clearHists()" />
             </form>
           </td>
@@ -57,6 +57,7 @@
       <ul id="info-nav">
         <li><a href="#batterFormid1"><span>Team 1</span></a></li>
         <li><a href="#batterFormid2"><span>Team 2</span></a></li>
+        <li><a href="#setAllValues"><span>Set For Team</span></a></li>
         <li><a href="#gameSim"><span>Simulate Game</span></a></li>
       </ul>
       <br/>
@@ -68,23 +69,23 @@
               <tr>
                 <td>
                   <h3>Batter 1:</h3>
-                  At Bats: <input type="text" id="atBatBoxid1" name="atBatBox1"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid1" name="plateAppearanceBox1"><br/>
                   Hits: <input type="text" id="hitsBoxid1" name="hitsBox1"><br/>
                   Doubles: <input type="text" id="doublesBoxid1" name="doublesBox1"><br/>
                   <h3>Batter 2:</h3>
-                  At Bats: <input type="text" id="atBatBoxid2" name="atBatBox2"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid2" name="plateAppearanceBox2"><br/>
                   Hits: <input type="text" id="hitsBoxid2" name="hitsBox2"><br/>
                   Doubles: <input type="text" id="doublesBoxid2" name="doublesBox2"><br/>
                   <h3>Batter 3:</h3>
-                  At Bats: <input type="text" id="atBatBoxid3" name="atBatBox3"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid3" name="plateAppearanceBox3"><br/>
                   Hits: <input type="text" id="hitsBoxid3" name="hitsBox3"><br/>
                   Doubles: <input type="text" id="doublesBoxid3" name="doublesBox3"><br/>
                   <h3>Batter 4:</h3>
-                  At Bats: <input type="text" id="atBatBoxid4" name="atBatBox4"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid4" name="plateAppearanceBox4"><br/>
                   Hits: <input type="text" id="hitsBoxid4" name="hitsBox4"><br/>
                   Doubles: <input type="text" id="doublesBoxid4" name="doublesBox4"><br/>
                   <h3>Batter 5:</h3>
-                  At Bats: <input type="text" id="atBatBoxid5" name="atBatBox5"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid5" name="plateAppearanceBox5"><br/>
                   Hits: <input type="text" id="hitsBoxid5" name="hitsBox5"><br/>
                   Doubles: <input type="text" id="doublesBoxid5" name="doublesBox5"><br/>
                 </td>
@@ -112,19 +113,19 @@
                 </td>
                 <td>
                   <h3>Batter 6:</h3>
-                  At Bats: <input type="text" id="atBatBoxid6" name="atBatBox6"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid6" name="plateAppearanceBox6"><br/>
                   Hits: <input type="text" id="hitsBoxid6" name="hitsBox6"><br/>
                   Doubles: <input type="text" id="doublesBoxid6" name="doublesBox6"><br/>
                   <h3>Batter 7:</h3>
-                  At Bats: <input type="text" id="atBatBoxid7" name="atBatBox7"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid7" name="plateAppearanceBox7"><br/>
                   Hits: <input type="text" id="hitsBoxid7" name="hitsBox7"><br/>
                   Doubles: <input type="text" id="doublesBoxid7" name="doublesBox7"><br/>
                   <h3>Batter 8:</h3>
-                  At Bats: <input type="text" id="atBatBoxid8" name="atBatBox8"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid8" name="plateAppearanceBox8"><br/>
                   Hits: <input type="text" id="hitsBoxid8" name="hitsBox8"><br/>
                   Doubles: <input type="text" id="doublesBoxid8" name="doublesBox8"><br/>
                   <h3>Batter 9:</h3>
-                  At Bats: <input type="text" id="atBatBoxid9" name="atBatBox9"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid9" name="plateAppearanceBox9"><br/>
                   Hits: <input type="text" id="hitsBoxid9" name="hitsBox9"><br/>
                   Doubles: <input type="text" id="doublesBoxid9" name="doublesBox9"><br/>
                   <h3>&nbsp;</h3>
@@ -157,23 +158,23 @@
               <tr>
                 <td>
                   <h3>Batter 1:</h3>
-                  At Bats: <input type="text" id="atBatBoxid10" name="atBatBox10"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid10" name="plateAppearanceBox10"><br/>
                   Hits: <input type="text" id="hitsBoxid10" name="hitsBox10"><br/>
                   Doubles: <input type="text" id="doublesBoxid10" name="doublesBox10"><br/>
                   <h3>Batter 2:</h3>
-                  At Bats: <input type="text" id="atBatBoxid11" name="atBatBox11"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid11" name="plateAppearanceBox11"><br/>
                   Hits: <input type="text" id="hitsBoxid11" name="hitsBox11"><br/>
                   Doubles: <input type="text" id="doublesBoxid11" name="doublesBox11"><br/>
                   <h3>Batter 3:</h3>
-                  At Bats: <input type="text" id="atBatBoxid12" name="atBatBox12"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid12" name="plateAppearanceBox12"><br/>
                   Hits: <input type="text" id="hitsBoxid12" name="hitsBox12"><br/>
                   Doubles: <input type="text" id="doublesBoxid12" name="doublesBox12"><br/>
                   <h3>Batter 4:</h3>
-                  At Bats: <input type="text" id="atBatBoxid13" name="atBatBox13"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid13" name="plateAppearanceBox13"><br/>
                   Hits: <input type="text" id="hitsBoxid13" name="hitsBox13"><br/>
                   Doubles: <input type="text" id="doublesBoxid13" name="doublesBox13"><br/>
                   <h3>Batter 5:</h3>
-                  At Bats: <input type="text" id="atBatBoxid14" name="atBatBox14"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid14" name="plateAppearanceBox14"><br/>
                   Hits: <input type="text" id="hitsBoxid14" name="hitsBox14"><br/>
                   Doubles: <input type="text" id="doublesBoxid14" name="doublesBox14"><br/>
                 </td>
@@ -201,19 +202,19 @@
                 </td>
                 <td>
                   <h3>Batter 6:</h3>
-                  At Bats: <input type="text" id="atBatBoxid15" name="atBatBox15"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid15" name="plateAppearanceBox15"><br/>
                   Hits: <input type="text" id="hitsBoxid15" name="hitsBox15"><br/>
                   Doubles: <input type="text" id="doublesBoxid15" name="doublesBox15"><br/>
                   <h3>Batter 7:</h3>
-                  At Bats: <input type="text" id="atBatBoxid16" name="atBatBox16"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid16" name="plateAppearanceBox16"><br/>
                   Hits: <input type="text" id="hitsBoxid16" name="hitsBox16"><br/>
                   Doubles: <input type="text" id="doublesBoxid16" name="doublesBox16"><br/>
                   <h3>Batter 8:</h3>
-                  At Bats: <input type="text" id="atBatBoxid17" name="atBatBox17"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid17" name="plateAppearanceBox17"><br/>
                   Hits: <input type="text" id="hitsBoxid17" name="hitsBox17"><br/>
                   Doubles: <input type="text" id="doublesBoxid17" name="doublesBox17"><br/>
                   <h3>Batter 9:</h3>
-                  At Bats: <input type="text" id="atBatBoxid18" name="atBatBox18"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid18" name="plateAppearanceBox18"><br/>
                   Hits: <input type="text" id="hitsBoxid18" name="hitsBox18"><br/>
                   Doubles: <input type="text" id="doublesBoxid18" name="doublesBox18"><br/>
                   <h3>&nbsp;</h3>
@@ -237,6 +238,40 @@
                   Triples: <input type="text" id="triplesBoxid18" name="triplesBox18"><br/>
                   Home Runs: <input type="text" id="homeRunBoxid18" name="homeRunBox18"><br/>
                   Walks: <input type="text" id="baseOnBallBoxid18" name="baseOnBallBox18"><br/>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div id="setAllValues" class="hide">
+            <table>
+              <tr>
+                <td>
+                  <h3>Team 1:</h3>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxTeam1" name="plateAppearanceTeam1"><br/>
+                  Hits: <input type="text" id="hitsBoxTeam1" name="hitsTeam1"><br/>
+                  Doubles: <input type="text" id="doublesBoxTeam1" name="doublesTeam1"><br/>
+                  <h3>&nbsp;</h3>
+                  <input type="button" name="ResetTeam1Vals" value="Set All Team 1 Values" onclick="setToReference(1)" /><br/>
+                </td>
+                <td>
+                  <h3>&nbsp;</h3>
+                  Triples: <input type="text" id="triplesBoxTeam1" name="triplesTeam1"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxTeam1" name="homeRunTeam1"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxTeam1" name="baseOnBallTeam1"><br/>
+                </td>
+                <td>
+                  <h3>Team 2:</h3>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxTeam2" name="plateAppearanceTeam2"><br/>
+                  Hits: <input type="text" id="hitsBoxTeam2" name="hitsTeam2"><br/>
+                  Doubles: <input type="text" id="doublesBoxTeam2" name="doublesTeam2"><br/>
+                  <h3>&nbsp;</h3>
+                  <input type="button" name="ResetTeam2Vals" value="Set All Team 2 Values" onclick="setToReference(2)" /><br/>
+                </td>
+                <td>
+                  <h3>&nbsp;</h3>
+                  Triples: <input type="text" id="triplesBoxTeam2" name="triplesTeam2"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxTeam2" name="homeRunTeam2"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxTeam2" name="baseOnBallTeam2"><br/>
                 </td>
               </tr>
             </table>
