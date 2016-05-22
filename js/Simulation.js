@@ -363,7 +363,7 @@ function determineHitType(batter) {
     return 4;
   if(roll < (hrOdds+tripOdds))
     return 3;
-  if(roll > (hrOdds+tripOdds+doubOdds))
+  if(roll < (hrOdds+tripOdds+doubOdds))
     return 2;
   else
     return 1;
