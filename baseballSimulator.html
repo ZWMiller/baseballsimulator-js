@@ -29,36 +29,13 @@
 
   <body onload="onOpen()" style="font-family:arial">
     <div id="banner"><img src="img/baseballSimBanner.png" alt="Banner"></div><br/>
-    <div id="controls">
-      <table>
-        <tr>
-          <td>
-            <form name="simControls" action="" method="POST">
-              Num At Bat Sims: <input type="text" id="numSimBoxid" name="numSimBox"><br/>
-              Num Inning Sims: <input type="text" id="numInnBoxid" name="numInnBox"><br/>
-              <input type="button" name="AtBat" value="Sim Plate Appearances" onclick="runSimAtBat()" />
-              <input type="button" name="clearHistograms" value="Clear Plots" onclick="clearHists()" />
-            </form>
-          </td>
-          <td>
-            <form name="outputForm" action="" method="POST">
-              Num Hits/Walks: <input type="text" id="numHitsBoxid" name="numHitsBox"><br/>
-              Num Outs: <input type="text" id="numOutsBoxid" name="numOutsBox"><br/>
-              Num Runs: <input type="text" id="numRunsBoxid" name="numRunsBox"><br/>
-            </form>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div id="imageOut"></div>
-    <div id="imageOut2"></div>
     <br/>
     <div id="Tabs">
       <ul id="info-nav">
+        <li><a href="#gameSim"><span>Simulate Game</span></a></li>
         <li><a href="#batterFormid1"><span>Team 1</span></a></li>
         <li><a href="#batterFormid2"><span>Team 2</span></a></li>
         <li><a href="#setAllValues"><span>Set For Team</span></a></li>
-        <li><a href="#gameSim"><span>Simulate Game</span></a></li>
         <li><a href="#about"><span>About Simulation</span></a></li>
       </ul>
       <br/>
@@ -131,9 +108,9 @@
                   Doubles: <input type="text" id="doublesBoxid9" name="doublesBox9"><br/>
                   <h3>Pitcher:</h3>
                   ERA: <input type="text" id="eraBoxidTeam1" name="eraBox1"><br/>
-                  WHIP: <input type="text" id="whipBoxidTeam1" name="whipBox1"><br/>
+                  WHIP: <input type="text" id="whipBoxidTeam1" name="whipBox1">
+                   <h3>&nbsp;</h3>
                   <input type="button" name="ResetVals" value="Set All to League Avg" onclick="setToLeagueAverage(1)" /><br/>
-                  <input type="button" name="Inning" value="Sim Multiple Innings" onclick="simMultInnings(1)" />
                 </td>
                 <td>
                   <h3>&nbsp;</h3>
@@ -222,9 +199,9 @@
                   Doubles: <input type="text" id="doublesBoxid18" name="doublesBox18"><br/>
                   <h3>Pitcher:</h3>
                   ERA: <input type="text" id="eraBoxidTeam2" name="eraBox2"><br/>
-                  WHIP: <input type="text" id="whipBoxidTeam2" name="whipBox2"><br/>
+                  WHIP: <input type="text" id="whipBoxidTeam2" name="whipBox2">
+                   <h3>&nbsp;</h3>
                   <input type="button" name="ResetVals" value="Set All to League Avg" onclick="setToLeagueAverage(2)" /><br/>
-                  <input type="button" name="Inning" value="Sim Multiple Innings" onclick="simMultInnings(2)" />
                 </td>
                 <td>
                   <h3>&nbsp;</h3>
@@ -291,13 +268,20 @@
                 <td>
                   Team 1 Score: <input type="text" id="team1Score"><br/>
                   Team 2 Score: <input type="text" id="team2Score"><br/>
-                  <input type="button" name="simGame" value="Simulate Single Game" onclick="simulateGame()" />
+                  <input type="button" name="simGame" value="Simulate Single Game" onclick="simulateGame()" /><br/>
                   <input type="button" name="simMultGame2" value="Simulate Multiple Games" onclick="simulateMultGame()" />
                 </td>
                 <td>
                   Record: <input type="text" id="gameRecord"><br/>
                   Games to Sim: <input type="text" id="gamesToSimNumid"><br/>
-                  <input type="button" name="clrRecord" value="Clear Record" onclick="clearGameRecord()" />
+                  <input type="button" name="clrRecord" value="Clear Record" onclick="clearGameRecord()" /><br/>
+                  <input type="button" name="clearHistograms" value="Clear Plots" onclick="clearHists()" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div id="imageOut"></div>
+                  <div id="imageOut2"></div>
                 </td>
               </tr>
             </table>
@@ -305,19 +289,22 @@
           </div>
           <div id="about" class="hide">
             <h2>How the Simulation is Done</h2>
-            This simulation takes in the stats from all players on a team, then simulates each at bat using a Monte Carlo approach. The stats are used to set the percentage chance that an event occurs, and then rolls a dice and decides whether that event occurs. As an example each at bat results (hit, walk, or out) is determined by a combination of the pitchers "Walks and Hits per Inning Pitched" (WHIP) and the batters "On Base Percentage" (OBP). These values are tuned such that when fed the average Major League hitters stats for every batter and pitcher, the output value for runs per game matches the league average (2015 stats used for tuning).
+            This simulation takes in the stats from all players on a team (one starting pitcher, nine batters), then simulates each at bat using a Monte Carlo approach. The stats are used to set the percentage chance that an event occurs, and then the program rolls a dice and decides whether that event occurs. As an example each at bat's result (hit, walk, or out) is determined by a combination of the pitchers "Walks and Hits per Inning Pitched" (WHIP) and the batters "On Base Percentage" (OBP). If it's a hit, the batters distribution of extra base hit probability is used to decide whether they hit a single, double, triple or homerun. These way these values are used is tuned such that when fed the average Major League hitters stats for every batter and pitcher, the output value for runs per game matches the league average (2015 stats used for tuning).<br/>
 
-            The baserunning is very simplistic and follows "ghost man" rules from childhood games. A runner only advances by the number of bases equivalent to the hit. So, a single moves each runner one base, a double two bases, and so-on. This also means there is no such thing as a sacrifice fly in this simulation. However, both of these issues apply to both teams equally and should only have a small effect compared to the statistical fluctuation.
+            The baserunning is very simplistic and follows "ghost man" rules from childhood games. A runner only advances by the number of bases equivalent to the hit. So, a single moves each runner one base, a double two bases, and so-on. This also means there is no such thing as a sacrifice fly in this simulation. However, both of these issues apply to both teams equally and should only have a small effect compared to the statistical fluctuation.<br/>
 
             <h2>Stats in Use</h2>
-            I've chosen to not rely on inputting average and slugging percentage, and then calling it a day. I tried this initially, as it's the simplest method, however the predictive power was weak at best. Fed the lineups from the 2014 Cubs and Reds, this simple form only found the Cubs to be marginally better than the Reds. This was simply not true. Thus, I moved to requiring more detailed information for each batter at the cost of an ugly form and a large commitment of time from the user. However, the accuracy of the simulation is much better now: coming within 7% of the Cubs vs Reds (2014) win-percentage over the course of 10,000 simulations. Given the lack of baserunning, sac-fly, etc. I'm content with that result. 
+            I've chosen to not rely on inputting average and slugging percentage, and then calling it a day. I tried this initially, as it's the simplest method, however the predictive power was weak at best. Fed the lineups from the 2014 Cubs and Reds, this simple form only found the Cubs to be marginally better than the Reds. This was simply not true. Thus, I moved to requiring more detailed information for each batter at the cost of an ugly form and a large commitment of time from the user. However, the accuracy of the simulation is much better now: coming within 7% of the Cubs vs Reds (2015) win-percentage over the course of 10,000 simulations. Given the lack of baserunning, sac-fly, etc. I'm content with that result. 
 
             <h2>Improvements to Come</h2>
-            Currently, the pitching stats are limited. Part of that is due to being under-development... part of that is because accounting for pitching is really quite difficult. Sample sizes are small in terms of game-long perfomance, finding predictive inputs is difficult, and finding a nice way to merge the pitcher and the batter to produce reliable outputs of their head-to-head matchups. Currently, I use WHIP and ERA (earner run average) to scale the batter's chance of successful at bats and hitting for extra bases. Improvements to this system are underway. 
+            Currently, the pitching stats are limited. Part of that is due to being under-development... part of that is because accounting for pitching is really quite difficult. Sample sizes are small in terms of game-long perfomance, finding predictive inputs is difficult, and finding a nice way to merge the pitcher and the batter to produce reliable outputs of their head-to-head matchups is questionable. Currently, I use WHIP and ERA (earned run average) to scale the batter's chance of successful at bats and hitting for extra bases. Improvements to this system are underway.<br/> 
 
-            And with that, I release this to you to play with. Enjoy tinkering with lineups to see how the runs/game can change. I hope to add more features, such as tracking individual batter performance, the ability to lookup already completed teams, etc... but those are still far away. In the meantime, happy simulating.
+            And with that, I release this to you to play with. Enjoy tinkering with lineups to see how the runs/game can change. I also think you'll find the random fluctuations to be much larger than you expect. Try simulating a 162 game season with two equivalent teams, you'll see seasons where one team wins more than 90 games (the accepted threshold of an excellent team) quite frequently; which is strange considering both teams are identical. But, thems the breaks and also why most experts agree that in order to always select the true best team, we'd need a 400+ game season. Statistics are fun. <br/><br/>
+            
+            I hope to add more features, such as tracking individual batter performance, the ability to lookup already completed teams, etc... but those are still far away. In the meantime, happy simulating. If you find bugs or strange behavior, please mail to zaglamir@gmail.com.
             <br/><br/>
-               &copy; Z.W. Miller - 2016
+            -Zach<br/>
+            &copy; Z.W. Miller - 2016
           </div>
         </form>
       </div> <!--Content Area Tag-->

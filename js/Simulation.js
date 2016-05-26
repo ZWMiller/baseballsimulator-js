@@ -151,8 +151,6 @@ function setDefaultValues() {
     setReferenceValues(team);
   }
 
-  document.getElementById('numSimBoxid').value = 10;
-  document.getElementById('numInnBoxid').value = 1000;
   document.getElementById("gamesToSimNumid").value = 162;
   clearGameRecord();
 }
@@ -172,30 +170,6 @@ function renderGameRecord() {
   var teamOneRecord = teamOne().gameRecord;
   var teamTwoRecord = teamTwo().gameRecord;
   document.getElementById('gameRecord').value = `${teamOneRecord}-${teamTwoRecord}`;
-}
-
-function runSimAtBat() {
-  var simStats = {
-    hits: 0,
-    outs: 0,
-    numSims: document.getElementById('numSimBoxid').value
-  }
-  getLineup(teamOne());
-  var battingAverage = teamOne().batters[0].battingaverage;
-  var onBasePerc = teamOne().batters[0].onbasepercentage;
-  var pitcher = teamTwo().pitcher;
-
-  if(!checkBatterStats(battingAverage,onBasePerc)) return false;
-  for(var i=0; i<simStats.numSims; i++) {
-    if(simAtBat(onBasePerc,pitcher))
-      simStats.hits++;
-    else
-      simStats.outs++;
-  };
-
-  document.getElementById('numHitsBoxid').value = simStats.hits;
-  document.getElementById('numOutsBoxid').value = simStats.outs;
-  document.getElementById('numRunsBoxid').value = "X X X";
 }
 
 function simulateMultGame(){
@@ -221,9 +195,6 @@ function simulateMultGame(){
   var r2Av = average(simStats.runs2);
   document.getElementById('team1Score').value = r1Av.toFixed(2);
   document.getElementById('team2Score').value = r2Av.toFixed(2);
-  document.getElementById('numHitsBoxid').value = "X X X";
-  document.getElementById('numRunsBoxid').value = allRunAv.toFixed(2);
-  document.getElementById('numOutsBoxid').value = "X X X";
 
   clearHists();
   makeHisto(simStats.runs1,"Team 1 Score","imageOut");
@@ -254,7 +225,7 @@ function simulateGame() {
   var inning = 1;
   while(inning <= 9 || (teamOne().score == teamTwo().score)) {
     for(var team of simulationData.teams) {
-      var temp = runSimInning(1,team);
+      var temp = runSimInning(team);
       if(temp == "exit") {
         alert("runSimInning Failed. Exit.");
         return;
@@ -267,40 +238,6 @@ function simulateGame() {
   updateRecord(teamOne());
   if(teamOne().score < teamTwo().score)
   updateRecord(teamTwo());
-}
-
-function simMultInnings(team){
-  runMultInnings(simulationData.teams[team-1]);
-}
-
-function runMultInnings(team) {
-  var numInns = document.getElementById('numInnBoxid').value
-  var runs = 0;
-  var hits = 0;
-  var hitLog = [];
-  var runLog = [];
-  var simCount = 0;
-  for(var i=0; i<numInns; i++) {
-    var temp = runSimInning(1,team);
-    if(temp == "exit")
-      return;
-    hits += temp.hits;
-    runs += temp.runs;
-    hitLog.push(temp.hits);
-    runLog.push(temp.runs);
-    simCount++;
-  }
-  if(simCount > 0) {
-    document.getElementById('numHitsBoxid').value = hits/simCount;
-    document.getElementById('numRunsBoxid').value = runs/simCount;
-    document.getElementById('numOutsBoxid').value = "X X X";
-  } else {
-    document.getElementById('numHitsBoxid').value = "X X X";
-    document.getElementById('numRunsBoxid').value = "X X X";
-  }
-  clearHists();
-  makeHisto(hitLog,"Hits in the Inning","imageOut");
-  makeHisto(runLog,"Runs in the Inning","imageOut2");
 }
 
 function makeHisto(data,title,division) {
@@ -321,7 +258,7 @@ function getPitcher(team){
   return pitcher;
 }
 
-function runSimInning(mode,team){
+function runSimInning(team){
   var hitType=0;
   var baseState=[0,0,0];
   var batterStats = [];
@@ -349,21 +286,11 @@ function runSimInning(mode,team){
     if(++team.currentHitterId >= team.batters.length)
       team.currentHitterId = 0;
   }
-  if(mode == 1) {
-    return innStats;
-  }
-  else {
-    document.getElementById('numHitsBoxid').value = innStats.hits;
-    document.getElementById('numOutsBoxid').value = innStats.outs;
-    document.getElementById('numRunsBoxid').value = innStats.runs;
-  }
+  return innStats;
 }
 
 function lineupFailure() {
   clearHists();
-  document.getElementById('numHitsBoxid').value = "Invalid Lineup";
-  document.getElementById('numOutsBoxid').value = "Invalid Lineup";
-  document.getElementById('numRunsBoxid').value = "Invalid Lineup";
 }
 
 function checkBatterStats(battingAverage,OBP) {

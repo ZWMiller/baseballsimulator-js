@@ -1,5 +1,5 @@
 h2 {
-  text-align: center;
+  text-align: left;
 }
 
 form {
@@ -37,7 +37,8 @@ form {
   height: 1450px;
   font-family: Tahoma, Geneva, sans-serif;
   font-size: 14px;
-  font-style: italic;
+  font-style: normal;
+  text-align: left;
   line-height: 24px;
   font-weight: bold;
   color: #000;
@@ -65,7 +66,7 @@ form {
 #banner img {
     width:915px;
     max-height:175px;
-    padding-left:15px;
+    padding-left:10px;
 }
 
 #imageOut {
