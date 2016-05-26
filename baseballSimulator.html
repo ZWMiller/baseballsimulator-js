@@ -29,35 +29,14 @@
 
   <body onload="onOpen()" style="font-family:arial">
     <div id="banner"><img src="img/baseballSimBanner.png" alt="Banner"></div><br/>
-    <div id="controls">
-      <table>
-        <tr>
-          <td>
-            <form name="simControls" action="" method="POST">
-              Num At Bat Sims: <input type="text" id="numSimBoxid" name="numSimBox"><br/>
-              Num Inning Sims: <input type="text" id="numInnBoxid" name="numInnBox"><br/>
-              <input type="button" name="AtBat" value="Sim At Bats" onclick="runSimAtBat()" />
-              <input type="button" name="clearHistograms" value="Clear Hists" onclick="clearHists()" />
-            </form>
-          </td>
-          <td>
-            <form name="outputForm" action="" method="POST">
-              Num Hits/Walks: <input type="text" id="numHitsBoxid" name="numHitsBox"><br/>
-              Num Outs: <input type="text" id="numOutsBoxid" name="numOutsBox"><br/>
-              Num Runs: <input type="text" id="numRunsBoxid" name="numRunsBox"><br/>
-            </form>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div id="imageOut"></div>
-    <div id="imageOut2"></div>
     <br/>
     <div id="Tabs">
       <ul id="info-nav">
+        <li><a href="#gameSim"><span>Simulate Game</span></a></li>
         <li><a href="#batterFormid1"><span>Team 1</span></a></li>
         <li><a href="#batterFormid2"><span>Team 2</span></a></li>
-        <li><a href="#gameSim"><span>Simulate Game</span></a></li>
+        <li><a href="#setAllValues"><span>Set For Team</span></a></li>
+        <li><a href="#about"><span>About Simulation</span></a></li>
       </ul>
       <br/>
       <br/>
@@ -68,69 +47,88 @@
               <tr>
                 <td>
                   <h3>Batter 1:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid1" name="batAverageBox1"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid1" name="onBasePercBox1"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid1" name="plateAppearanceBox1"><br/>
+                  Hits: <input type="text" id="hitsBoxid1" name="hitsBox1"><br/>
+                  Doubles: <input type="text" id="doublesBoxid1" name="doublesBox1"><br/>
                   <h3>Batter 2:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid2" name="batAverageBox2"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid2" name="onBasePercBox2"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid2" name="plateAppearanceBox2"><br/>
+                  Hits: <input type="text" id="hitsBoxid2" name="hitsBox2"><br/>
+                  Doubles: <input type="text" id="doublesBoxid2" name="doublesBox2"><br/>
                   <h3>Batter 3:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid3" name="batAverageBox3"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid3" name="onBasePercBox3"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid3" name="plateAppearanceBox3"><br/>
+                  Hits: <input type="text" id="hitsBoxid3" name="hitsBox3"><br/>
+                  Doubles: <input type="text" id="doublesBoxid3" name="doublesBox3"><br/>
                   <h3>Batter 4:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid4" name="batAverageBox4"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid4" name="onBasePercBox4"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid4" name="plateAppearanceBox4"><br/>
+                  Hits: <input type="text" id="hitsBoxid4" name="hitsBox4"><br/>
+                  Doubles: <input type="text" id="doublesBoxid4" name="doublesBox4"><br/>
                   <h3>Batter 5:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid5" name="batAverageBox5"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid5" name="onBasePercBox5">
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid5" name="plateAppearanceBox5"><br/>
+                  Hits: <input type="text" id="hitsBoxid5" name="hitsBox5"><br/>
+                  Doubles: <input type="text" id="doublesBoxid5" name="doublesBox5"><br/>
                 </td>
                 <td>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid1" name="sluggingPercBox1"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid1" name="homeRunPercBox1"><br/>
+                  Triples: <input type="text" id="triplesBoxid1" name="triplesBox1"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid1" name="homeRunBox1"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid1" name="baseOnBallBox1"><br/>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid2" name="sluggingPercBox2"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid2" name="homeRunPercBox2"><br/>
+                  Triples: <input type="text" id="triplesBoxid2" name="triplesBox2"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid2" name="homeRunBox2"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid2" name="baseOnBallBox2"><br/>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid3" name="sluggingPercBox3"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid3" name="homeRunPercBox3"><br/>
+                  Triples: <input type="text" id="triplesBoxid3" name="triplesBox3"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid3" name="homeRunBox3"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid3" name="baseOnBallBox3"><br/>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid4" name="sluggingPercBox4"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid4" name="homeRunPercBox4"><br/>
+                  Triples: <input type="text" id="triplesBoxid4" name="triplesBox4"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid4" name="homeRunBox4"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid4" name="baseOnBallBox4"><br/>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid5" name="sluggingPercBox5"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid5" name="homeRunPercBox5"><br/>
+                  Triples: <input type="text" id="triplesBoxid5" name="triplesBox5"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid5" name="homeRunBox5"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid5" name="baseOnBallBox5"><br/>
                 </td>
                 <td>
                   <h3>Batter 6:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid6" name="batAverageBox6"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid6" name="onBasePercBox6"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid6" name="plateAppearanceBox6"><br/>
+                  Hits: <input type="text" id="hitsBoxid6" name="hitsBox6"><br/>
+                  Doubles: <input type="text" id="doublesBoxid6" name="doublesBox6"><br/>
                   <h3>Batter 7:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid7" name="batAverageBox7"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid7" name="onBasePercBox7"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid7" name="plateAppearanceBox7"><br/>
+                  Hits: <input type="text" id="hitsBoxid7" name="hitsBox7"><br/>
+                  Doubles: <input type="text" id="doublesBoxid7" name="doublesBox7"><br/>
                   <h3>Batter 8:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid8" name="batAverageBox8"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid8" name="onBasePercBox8"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid8" name="plateAppearanceBox8"><br/>
+                  Hits: <input type="text" id="hitsBoxid8" name="hitsBox8"><br/>
+                  Doubles: <input type="text" id="doublesBoxid8" name="doublesBox8"><br/>
                   <h3>Batter 9:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid9" name="batAverageBox9"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid9" name="onBasePercBox9"><br/><br/>
-                  <align=center><h3>&nbsp;</h3>
-                  <input type="button" name="ResetVals" value="Set All to League Avg" onclick="setToAverage(1)" /><br/>
-                  <input type="button" name="Inning" value="Sim Multiple Innings" onclick="simMultInnings(1)" />
-                  </align>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid9" name="plateAppearanceBox9"><br/>
+                  Hits: <input type="text" id="hitsBoxid9" name="hitsBox9"><br/>
+                  Doubles: <input type="text" id="doublesBoxid9" name="doublesBox9"><br/>
+                  <h3>Pitcher:</h3>
+                  ERA: <input type="text" id="eraBoxidTeam1" name="eraBox1"><br/>
+                  WHIP: <input type="text" id="whipBoxidTeam1" name="whipBox1">
+                   <h3>&nbsp;</h3>
+                  <input type="button" name="ResetVals" value="Set All to League Avg" onclick="setToLeagueAverage(1)" /><br/>
                 </td>
                 <td>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid6" name="sluggingPercBox6"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid6" name="homeRunPercBox6"><br/>
+                  Triples: <input type="text" id="triplesBoxid6" name="triplesBox6"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid6" name="homeRunBox6"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid6" name="baseOnBallBox6"><br/>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid7" name="sluggingPercBox7"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid7" name="homeRunPercBox7"><br/>
+                  Triples: <input type="text" id="triplesBoxid7" name="triplesBox7"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid7" name="homeRunBox7"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid7" name="baseOnBallBox7"><br/>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid8" name="sluggingPercBox8"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid8" name="homeRunPercBox8"><br/>
+                  Triples: <input type="text" id="triplesBoxid8" name="triplesBox8"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid8" name="homeRunBox8"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid8" name="baseOnBallBox8"><br/>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid9" name="sluggingPercBox9"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid9" name="homeRunPercBox9"><br/>
+                  Triples: <input type="text" id="triplesBoxid9" name="triplesBox9"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid9" name="homeRunBox9"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid9" name="baseOnBallBox9"><br/>
                 </td>
               </tr>
             </table>
@@ -140,68 +138,126 @@
               <tr>
                 <td>
                   <h3>Batter 1:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid10" name="batAverageBox10"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid10" name="onBasePercBox10"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid10" name="plateAppearanceBox10"><br/>
+                  Hits: <input type="text" id="hitsBoxid10" name="hitsBox10"><br/>
+                  Doubles: <input type="text" id="doublesBoxid10" name="doublesBox10"><br/>
                   <h3>Batter 2:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid11" name="batAverageBox11"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid11" name="onBasePercBox11"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid11" name="plateAppearanceBox11"><br/>
+                  Hits: <input type="text" id="hitsBoxid11" name="hitsBox11"><br/>
+                  Doubles: <input type="text" id="doublesBoxid11" name="doublesBox11"><br/>
                   <h3>Batter 3:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid12" name="batAverageBox12"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid12" name="onBasePercBox12"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid12" name="plateAppearanceBox12"><br/>
+                  Hits: <input type="text" id="hitsBoxid12" name="hitsBox12"><br/>
+                  Doubles: <input type="text" id="doublesBoxid12" name="doublesBox12"><br/>
                   <h3>Batter 4:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid13" name="batAverageBox13"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid13" name="onBasePercBox13"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid13" name="plateAppearanceBox13"><br/>
+                  Hits: <input type="text" id="hitsBoxid13" name="hitsBox13"><br/>
+                  Doubles: <input type="text" id="doublesBoxid13" name="doublesBox13"><br/>
                   <h3>Batter 5:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid14" name="batAverageBox14"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid14" name="onBasePercBox14">
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid14" name="plateAppearanceBox14"><br/>
+                  Hits: <input type="text" id="hitsBoxid14" name="hitsBox14"><br/>
+                  Doubles: <input type="text" id="doublesBoxid14" name="doublesBox14"><br/>
                 </td>
-                 <td>
+                <td>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid10" name="sluggingPercBox10"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid10" name="homeRunPercBox10"><br/>
+                  Triples: <input type="text" id="triplesBoxid10" name="triplesBox10"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid10" name="homeRunBox10"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid10" name="baseOnBallBox10"><br/>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid11" name="sluggingPercBox11"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid11" name="homeRunPercBox11"><br/>
+                  Triples: <input type="text" id="triplesBoxid11" name="triplesBox11"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid11" name="homeRunBox11"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid11" name="baseOnBallBox11"><br/>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid12" name="sluggingPercBox12"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid12" name="homeRunPercBox12"><br/>
+                  Triples: <input type="text" id="triplesBoxid12" name="triplesBox12"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid12" name="homeRunBox12"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid12" name="baseOnBallBox12"><br/>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid13" name="sluggingPercBox13"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid13" name="homeRunPercBox13"><br/>
+                  Triples: <input type="text" id="triplesBoxid13" name="triplesBox13"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid13" name="homeRunBox13"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid13" name="baseOnBallBox13"><br/>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid14" name="sluggingPercBox14"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid14" name="homeRunPercBox14"><br/>
+                  Triples: <input type="text" id="triplesBoxid14" name="triplesBox14"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid14" name="homeRunBox14"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid14" name="baseOnBallBox14"><br/>
                 </td>
                 <td>
                   <h3>Batter 6:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid15" name="batAverageBox15"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid15" name="onBasePercBox15"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid15" name="plateAppearanceBox15"><br/>
+                  Hits: <input type="text" id="hitsBoxid15" name="hitsBox15"><br/>
+                  Doubles: <input type="text" id="doublesBoxid15" name="doublesBox15"><br/>
                   <h3>Batter 7:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid16" name="batAverageBox16"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid16" name="onBasePercBox16"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid16" name="plateAppearanceBox16"><br/>
+                  Hits: <input type="text" id="hitsBoxid16" name="hitsBox16"><br/>
+                  Doubles: <input type="text" id="doublesBoxid16" name="doublesBox16"><br/>
                   <h3>Batter 8:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid17" name="batAverageBox17"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid17" name="onBasePercBox17"><br/>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid17" name="plateAppearanceBox17"><br/>
+                  Hits: <input type="text" id="hitsBoxid17" name="hitsBox17"><br/>
+                  Doubles: <input type="text" id="doublesBoxid17" name="doublesBox17"><br/>
                   <h3>Batter 9:</h3>
-                  Batting Average: <input type="text" id="batAverageBoxid18" name="batAverageBox18"><br/>
-                  On Base Percentage: <input type="text" id="onBasePercBoxid18" name="onBasePercBox18"><br/><br/>
-                  <align=center><input type="button" name="ResetVals" value="Set All to League Avg" onclick="setToAverage(2)" />
-                  <input type="button" name="Inning" value="Sim Multiple Innings" onclick="simMultInnings(2)" />
-                  </align>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxid18" name="plateAppearanceBox18"><br/>
+                  Hits: <input type="text" id="hitsBoxid18" name="hitsBox18"><br/>
+                  Doubles: <input type="text" id="doublesBoxid18" name="doublesBox18"><br/>
+                  <h3>Pitcher:</h3>
+                  ERA: <input type="text" id="eraBoxidTeam2" name="eraBox2"><br/>
+                  WHIP: <input type="text" id="whipBoxidTeam2" name="whipBox2">
+                   <h3>&nbsp;</h3>
+                  <input type="button" name="ResetVals" value="Set All to League Avg" onclick="setToLeagueAverage(2)" /><br/>
                 </td>
-                   <td>
+                <td>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid15" name="sluggingPercBox15"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid15" name="homeRunPercBox15"><br/>
+                  Triples: <input type="text" id="triplesBoxid15" name="triplesBox15"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid15" name="homeRunBox15"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid15" name="baseOnBallBox15"><br/>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid16" name="sluggingPercBox16"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid16" name="homeRunPercBox16"><br/>
+                  Triples: <input type="text" id="triplesBoxid16" name="triplesBox16"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid16" name="homeRunBox16"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid16" name="baseOnBallBox16"><br/>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid17" name="sluggingPercBox17"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid17" name="homeRunPercBox17"><br/>
+                  Triples: <input type="text" id="triplesBoxid17" name="triplesBox17"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid17" name="homeRunBox17"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid17" name="baseOnBallBox17"><br/>
                   <h3>&nbsp;</h3>
-                  Slugging Percentage: <input type="text" id="sluggingPercBoxid18" name="sluggingPercBox18"><br/>
-                  Home Run Percentage: <input type="text" id="homeRunPercBoxid18" name="homeRunPercBox18"><br/>
+                  Triples: <input type="text" id="triplesBoxid18" name="triplesBox18"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxid18" name="homeRunBox18"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxid18" name="baseOnBallBox18"><br/>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div id="setAllValues" class="hide">
+            <table>
+              <tr>
+                <td>
+                  <h3>Team 1:</h3>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxTeam1" name="plateAppearanceTeam1"><br/>
+                  Hits: <input type="text" id="hitsBoxTeam1" name="hitsTeam1"><br/>
+                  Doubles: <input type="text" id="doublesBoxTeam1" name="doublesTeam1"><br/>
+                  ERA: <input type="text" id="eraBoxTeam1" name="eraTeam1"><br/>
+                  <h3>&nbsp;</h3>
+                  <input type="button" name="ResetTeam1Vals" value="Set All Team 1 Values" onclick="setToReference(1)" /><br/>
+                </td>
+                <td>
+                  <h3>&nbsp;</h3>
+                  Triples: <input type="text" id="triplesBoxTeam1" name="triplesTeam1"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxTeam1" name="homeRunTeam1"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxTeam1" name="baseOnBallTeam1"><br/>
+                  WHIP: <input type="text" id="whipBoxTeam1" name="whipTeam1"><br/>
+                </td>
+                <td>
+                  <h3>Team 2:</h3>
+                  Plate Appearances: <input type="text" id="plateAppearanceBoxTeam2" name="plateAppearanceTeam2"><br/>
+                  Hits: <input type="text" id="hitsBoxTeam2" name="hitsTeam2"><br/>
+                  Doubles: <input type="text" id="doublesBoxTeam2" name="doublesTeam2"><br/>
+                  ERA: <input type="text" id="eraBoxTeam2" name="eraTeam2"><br/>
+                  <h3>&nbsp;</h3>
+                  <input type="button" name="ResetTeam2Vals" value="Set All Team 2 Values" onclick="setToReference(2)" /><br/>
+                </td>
+                <td>
+                  <h3>&nbsp;</h3>
+                  Triples: <input type="text" id="triplesBoxTeam2" name="triplesTeam2"><br/>
+                  Home Runs: <input type="text" id="homeRunBoxTeam2" name="homeRunTeam2"><br/>
+                  Walks: <input type="text" id="baseOnBallBoxTeam2" name="baseOnBallTeam2"><br/>
+                  WHIP: <input type="text" id="whipBoxTeam2" name="whipTeam2"><br/>
                 </td>
               </tr>
             </table>
@@ -212,17 +268,43 @@
                 <td>
                   Team 1 Score: <input type="text" id="team1Score"><br/>
                   Team 2 Score: <input type="text" id="team2Score"><br/>
-                  <input type="button" name="simGame" value="Simulate Single Game" onclick="simulateGame()" />
+                  <input type="button" name="simGame" value="Simulate Single Game" onclick="simulateGame()" /><br/>
                   <input type="button" name="simMultGame2" value="Simulate Multiple Games" onclick="simulateMultGame()" />
                 </td>
                 <td>
                   Record: <input type="text" id="gameRecord"><br/>
                   Games to Sim: <input type="text" id="gamesToSimNumid"><br/>
-                  <input type="button" name="clrRecord" value="Clear Record" onclick="clearGameRecord()" />
+                  <input type="button" name="clrRecord" value="Clear Record" onclick="clearGameRecord()" /><br/>
+                  <input type="button" name="clearHistograms" value="Clear Plots" onclick="clearHists()" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div id="imageOut"></div>
+                  <div id="imageOut2"></div>
                 </td>
               </tr>
             </table>
             <div id=progressBarId></div>
+          </div>
+          <div id="about" class="hide">
+            <h2>How the Simulation is Done</h2>
+            This simulation takes in the stats from all players on a team (one starting pitcher, nine batters), then simulates each at bat using a Monte Carlo approach. The stats are used to set the percentage chance that an event occurs, and then the program rolls a dice and decides whether that event occurs. As an example each at bat's result (hit, walk, or out) is determined by a combination of the pitchers "Walks and Hits per Inning Pitched" (WHIP) and the batters "On Base Percentage" (OBP). If it's a hit, the batters distribution of extra base hit probability is used to decide whether they hit a single, double, triple or homerun. These way these values are used is tuned such that when fed the average Major League hitters stats for every batter and pitcher, the output value for runs per game matches the league average (2015 stats used for tuning).<br/>
+
+            The baserunning is very simplistic and follows "ghost man" rules from childhood games. A runner only advances by the number of bases equivalent to the hit. So, a single moves each runner one base, a double two bases, and so-on. This also means there is no such thing as a sacrifice fly in this simulation. However, both of these issues apply to both teams equally and should only have a small effect compared to the statistical fluctuation.<br/>
+
+            <h2>Stats in Use</h2>
+            I've chosen to not rely on inputting average and slugging percentage, and then calling it a day. I tried this initially, as it's the simplest method, however the predictive power was weak at best. Fed the lineups from the 2014 Cubs and Reds, this simple form only found the Cubs to be marginally better than the Reds. This was simply not true. Thus, I moved to requiring more detailed information for each batter at the cost of an ugly form and a large commitment of time from the user. However, the accuracy of the simulation is much better now: coming within 7% of the Cubs vs Reds (2015) win-percentage over the course of 10,000 simulations. Given the lack of baserunning, sac-fly, etc. I'm content with that result. 
+
+            <h2>Improvements to Come</h2>
+            Currently, the pitching stats are limited. Part of that is due to being under-development... part of that is because accounting for pitching is really quite difficult. Sample sizes are small in terms of game-long perfomance, finding predictive inputs is difficult, and finding a nice way to merge the pitcher and the batter to produce reliable outputs of their head-to-head matchups is questionable. Currently, I use WHIP and ERA (earned run average) to scale the batter's chance of successful at bats and hitting for extra bases. Improvements to this system are underway.<br/> 
+
+            And with that, I release this to you to play with. Enjoy tinkering with lineups to see how the runs/game can change. I also think you'll find the random fluctuations to be much larger than you expect. Try simulating a 162 game season with two equivalent teams, you'll see seasons where one team wins more than 90 games (the accepted threshold of an excellent team) quite frequently; which is strange considering both teams are identical. But, thems the breaks and also why most experts agree that in order to always select the true best team, we'd need a 400+ game season. Statistics are fun. <br/><br/>
+            
+            I hope to add more features, such as tracking individual batter performance, the ability to lookup already completed teams, etc... but those are still far away. In the meantime, happy simulating. If you find bugs or strange behavior, please mail to zaglamir@gmail.com.
+            <br/><br/>
+            -Zach<br/>
+            &copy; Z.W. Miller - 2016
           </div>
         </form>
       </div> <!--Content Area Tag-->
