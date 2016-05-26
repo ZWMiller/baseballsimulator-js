@@ -51,6 +51,11 @@ form {
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
 }
 
+#about form{
+  font-size: 18px;
+  font-style: normal;
+}
+
 #info #gameSim input{
   width: 350px;
   left: 0px;
