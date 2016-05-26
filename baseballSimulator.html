@@ -37,7 +37,7 @@
               Num At Bat Sims: <input type="text" id="numSimBoxid" name="numSimBox"><br/>
               Num Inning Sims: <input type="text" id="numInnBoxid" name="numInnBox"><br/>
               <input type="button" name="AtBat" value="Sim Plate Appearances" onclick="runSimAtBat()" />
-              <input type="button" name="clearHistograms" value="Clear Hists" onclick="clearHists()" />
+              <input type="button" name="clearHistograms" value="Clear Plots" onclick="clearHists()" />
             </form>
           </td>
           <td>
@@ -128,8 +128,10 @@
                   Plate Appearances: <input type="text" id="plateAppearanceBoxid9" name="plateAppearanceBox9"><br/>
                   Hits: <input type="text" id="hitsBoxid9" name="hitsBox9"><br/>
                   Doubles: <input type="text" id="doublesBoxid9" name="doublesBox9"><br/>
-                  <h3>&nbsp;</h3>
-                  <input type="button" name="ResetVals" value="Set All to League Avg" onclick="setToAverage(1)" /><br/>
+                  <h3>Pitcher:</h3>
+                  ERA: <input type="text" id="eraBoxidTeam1" name="eraBox1"><br/>
+                  WHIP: <input type="text" id="whipBoxidTeam1" name="whipBox1"><br/>
+                  <input type="button" name="ResetVals" value="Set All to League Avg" onclick="setToLeagueAverage(1)" /><br/>
                   <input type="button" name="Inning" value="Sim Multiple Innings" onclick="simMultInnings(1)" />
                 </td>
                 <td>
@@ -217,8 +219,10 @@
                   Plate Appearances: <input type="text" id="plateAppearanceBoxid18" name="plateAppearanceBox18"><br/>
                   Hits: <input type="text" id="hitsBoxid18" name="hitsBox18"><br/>
                   Doubles: <input type="text" id="doublesBoxid18" name="doublesBox18"><br/>
-                  <h3>&nbsp;</h3>
-                  <input type="button" name="ResetVals" value="Set All to League Avg" onclick="setToAverage(2)" /><br/>
+                  <h3>Pitcher:</h3>
+                  ERA: <input type="text" id="eraBoxidTeam2" name="eraBox2"><br/>
+                  WHIP: <input type="text" id="whipBoxidTeam2" name="whipBox2"><br/>
+                  <input type="button" name="ResetVals" value="Set All to League Avg" onclick="setToLeagueAverage(2)" /><br/>
                   <input type="button" name="Inning" value="Sim Multiple Innings" onclick="simMultInnings(2)" />
                 </td>
                 <td>
@@ -250,6 +254,7 @@
                   Plate Appearances: <input type="text" id="plateAppearanceBoxTeam1" name="plateAppearanceTeam1"><br/>
                   Hits: <input type="text" id="hitsBoxTeam1" name="hitsTeam1"><br/>
                   Doubles: <input type="text" id="doublesBoxTeam1" name="doublesTeam1"><br/>
+                  ERA: <input type="text" id="eraBoxTeam1" name="eraTeam1"><br/>
                   <h3>&nbsp;</h3>
                   <input type="button" name="ResetTeam1Vals" value="Set All Team 1 Values" onclick="setToReference(1)" /><br/>
                 </td>
@@ -258,12 +263,14 @@
                   Triples: <input type="text" id="triplesBoxTeam1" name="triplesTeam1"><br/>
                   Home Runs: <input type="text" id="homeRunBoxTeam1" name="homeRunTeam1"><br/>
                   Walks: <input type="text" id="baseOnBallBoxTeam1" name="baseOnBallTeam1"><br/>
+                  WHIP: <input type="text" id="whipBoxTeam1" name="whipTeam1"><br/>
                 </td>
                 <td>
                   <h3>Team 2:</h3>
                   Plate Appearances: <input type="text" id="plateAppearanceBoxTeam2" name="plateAppearanceTeam2"><br/>
                   Hits: <input type="text" id="hitsBoxTeam2" name="hitsTeam2"><br/>
                   Doubles: <input type="text" id="doublesBoxTeam2" name="doublesTeam2"><br/>
+                  ERA: <input type="text" id="eraBoxTeam2" name="eraTeam2"><br/>
                   <h3>&nbsp;</h3>
                   <input type="button" name="ResetTeam2Vals" value="Set All Team 2 Values" onclick="setToReference(2)" /><br/>
                 </td>
@@ -272,6 +279,7 @@
                   Triples: <input type="text" id="triplesBoxTeam2" name="triplesTeam2"><br/>
                   Home Runs: <input type="text" id="homeRunBoxTeam2" name="homeRunTeam2"><br/>
                   Walks: <input type="text" id="baseOnBallBoxTeam2" name="baseOnBallTeam2"><br/>
+                  WHIP: <input type="text" id="whipBoxTeam2" name="whipTeam2"><br/>
                 </td>
               </tr>
             </table>

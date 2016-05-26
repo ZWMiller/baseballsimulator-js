@@ -16,7 +16,7 @@ function createTeamOne() {
     firstPlayerNumber: 1,
     lastPlayerNumber: 9,
     batters: [],
-    pitchers: [],
+    pitcher: {},
     currentHitterId: 0,
     score: 0,
     gameRecord: 0,
@@ -29,7 +29,7 @@ function createTeamTwo() {
     firstPlayerNumber: 10,
     lastPlayerNumber: 18,
     batters: [],
-    pitchers: [],
+    pitcher: {},
     currentHitterId: 0,
     score: 0,
     gameRecord: 0,
@@ -81,16 +81,16 @@ function getLineup(team) {
       name: "Steve Stevenson",
     });
   }
-  var pitcherStats = [];
-  var whipL = 1;
-  var eraL = 1;
-  pitcherStats.push({
+  var pitcherStats;
+  var eraL = document.getElementById('eraBoxid'+team.name).value;
+  var whipL = document.getElementById('whipBoxid'+team.name).value;
+  pitcherStats = {
     whip: whipL,
     era: eraL,
-  });
+  };
 
   team.batters = batterStats;
-  team.pitchers = pitcherStats;
+  team.pitcher = pitcherStats;
 }
 function setToReference(teamNum){
   var team = simulationData.teams[teamNum-1];
@@ -100,6 +100,8 @@ function setToReference(teamNum){
   var tpl = document.getElementById('triplesBox'+team.name).value;
   var hr  = document.getElementById('homeRunBox'+team.name).value;
   var bb  = document.getElementById('baseOnBallBox'+team.name).value;
+  var era  = document.getElementById('eraBox'+team.name).value;
+  var whip  = document.getElementById('whipBox'+team.name).value;
 
   for (var currentPlayerNumber = team.firstPlayerNumber; currentPlayerNumber <= team.lastPlayerNumber; currentPlayerNumber++) {
     document.getElementById('plateAppearanceBoxid'+currentPlayerNumber).value = pa;
@@ -109,6 +111,8 @@ function setToReference(teamNum){
     document.getElementById('homeRunBoxid'+currentPlayerNumber).value = hr;
     document.getElementById('baseOnBallBoxid'+currentPlayerNumber).value = bb;
   }
+  document.getElementById('eraBoxid'+team.name).value = era;
+  document.getElementById('whipBoxid'+team.name).value = whip;
 }
 
 function setReferenceValues(team){
@@ -119,35 +123,31 @@ function setReferenceValues(team){
   document.getElementById('triplesBox'+teamId).value = 3;
   document.getElementById('homeRunBox'+teamId).value = 16;
   document.getElementById('baseOnBallBox'+teamId).value = 55;
+  document.getElementById('eraBox'+team.name).value = 4.02;
+  document.getElementById('whipBox'+team.name).value = 1.32;
 
 }
 
-function setToAverage(team) {
+function setToLeagueAverage(teamID){
+  setToStartingValues(simulationData.teams[teamID-1]);
+}
+
+function setToStartingValues(team) {
   for (var currentPlayerNumber = team.firstPlayerNumber; currentPlayerNumber <= team.lastPlayerNumber; currentPlayerNumber++) {
-    if(team == teamOne())
-      {
-        document.getElementById('plateAppearanceBoxid'+currentPlayerNumber).value = 600;
-        document.getElementById('hitsBoxid'+currentPlayerNumber).value = 134;
-        document.getElementById('doublesBoxid'+currentPlayerNumber).value = 27;
-        document.getElementById('triplesBoxid'+currentPlayerNumber).value = 3;
-        document.getElementById('homeRunBoxid'+currentPlayerNumber).value = 16;
-        document.getElementById('baseOnBallBoxid'+currentPlayerNumber).value = 55;
-      }
-      if(team == teamTwo())
-        {
-          document.getElementById('plateAppearanceBoxid'+currentPlayerNumber).value = 600;
-          document.getElementById('hitsBoxid'+currentPlayerNumber).value = 134;
-          document.getElementById('doublesBoxid'+currentPlayerNumber).value = 27;
-          document.getElementById('triplesBoxid'+currentPlayerNumber).value = 3;
-          document.getElementById('homeRunBoxid'+currentPlayerNumber).value = 18;
-          document.getElementById('baseOnBallBoxid'+currentPlayerNumber).value = 55;
-        }
+    document.getElementById('plateAppearanceBoxid'+currentPlayerNumber).value = 600;
+    document.getElementById('hitsBoxid'+currentPlayerNumber).value = 134;
+    document.getElementById('doublesBoxid'+currentPlayerNumber).value = 27;
+    document.getElementById('triplesBoxid'+currentPlayerNumber).value = 3;
+    document.getElementById('homeRunBoxid'+currentPlayerNumber).value = 16;
+    document.getElementById('baseOnBallBoxid'+currentPlayerNumber).value = 55;
   }
+  document.getElementById('eraBoxid'+team.name).value = 4.02;
+  document.getElementById('whipBoxid'+team.name).value = 1.32;
 }
 
 function setDefaultValues() {
   for(var team of simulationData.teams) {
-    setToAverage(team)
+    setToStartingValues(team)
     setReferenceValues(team);
   }
 
@@ -183,10 +183,11 @@ function runSimAtBat() {
   getLineup(teamOne());
   var battingAverage = teamOne().batters[0].battingaverage;
   var onBasePerc = teamOne().batters[0].onbasepercentage;
+  var pitcher = teamTwo().pitcher;
 
   if(!checkBatterStats(battingAverage,onBasePerc)) return false;
   for(var i=0; i<simStats.numSims; i++) {
-    if(simAtBat(onBasePerc))
+    if(simAtBat(onBasePerc,pitcher))
       simStats.hits++;
     else
       simStats.outs++;
@@ -311,11 +312,16 @@ function makeHisto(data,title,division) {
   $("svg").css({top: 20, left: 80, padding: 20, position:'relative'});
 }
 
-function runSimInning(mode,team)
-{
-  var hits=0;
-  var outs=0;
-  var runs=0;
+function getPitcher(team){
+  var pitcher;
+  if(team == teamOne())
+    pitcher = teamTwo().pitcher;
+  if(team == teamTwo())
+    pitcher = teamOne().pitcher;
+  return pitcher;
+}
+
+function runSimInning(mode,team){
   var hitType=0;
   var baseState=[0,0,0];
   var batterStats = [];
@@ -325,13 +331,16 @@ function runSimInning(mode,team)
     runs: 0,
     outs: 0
   };
+
+  var pitcher = getPitcher(team);
+
   while(innStats.outs < 3) {
     var battingAverage = team.batters[team.currentHitterId].battingaverage;
     var onBasePerc = team.batters[team.currentHitterId].onbasepercentage;
     team.batters[team.currentHitterId].atbatsincurrentsim++;
-    if(simAtBat(onBasePerc)) {
+    if(simAtBat(onBasePerc,pitcher)) {
       innStats.hits++;
-      hitType = determineHitType(team.batters[team.currentHitterId]);
+      hitType = determineHitType(team);
       innStats.runs += moveRunners(hitType, baseState);
       team.batters[team.currentHitterId].hitsincurrentsim++;
     } else {
@@ -344,9 +353,9 @@ function runSimInning(mode,team)
     return innStats;
   }
   else {
-    document.getElementById('numHitsBoxid').value = hits;
-    document.getElementById('numOutsBoxid').value = outs;
-    document.getElementById('numRunsBoxid').value = runs;
+    document.getElementById('numHitsBoxid').value = innStats.hits;
+    document.getElementById('numOutsBoxid').value = innStats.outs;
+    document.getElementById('numRunsBoxid').value = innStats.runs;
   }
 }
 
@@ -369,14 +378,20 @@ function checkBatterStats(battingAverage,OBP) {
   }
 }
 
-function simAtBat(OBP) {
-  if(Math.random() < OBP)
+function simAtBat(OBP,pitcher) {
+  if(Math.random() < (OBP*(pitcher.whip/1.2))){ // Division by 1.2 used to tune the response to match observed league averages
     return true;
-  else
+  }
+  else{
     return false;
+  }
 }
 
-function determineHitType(batter) {
+function determineHitType(team) {
+  var batter = team.batters[team.currentHitterId];
+  var pitcher = getPitcher(team);
+  var era = pitcher.era;
+
   var obp = batter.onbasepercentage;
   var batavg = batter.battingaverage;
   var slg = batter.sluggingpercentage;
@@ -388,6 +403,12 @@ function determineHitType(batter) {
   var hrOdds   = hr/hits;
   var tripOdds = trp/hits;
   var doubOdds = dbl/hits;
+
+  // Add pitcher effect, tuned to match observed averages
+  hrOdds = hrOdds*(era/4);
+  tripOdds = tripOdds*(era/4);
+  doubOdds = doubOdds*(era/4);
+
   if(checkIfWalk(percentWalks))
     return 1;
 
