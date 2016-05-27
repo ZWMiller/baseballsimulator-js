@@ -172,6 +172,17 @@ function renderGameRecord() {
   document.getElementById('gameRecord').value = `${teamOneRecord}-${teamTwoRecord}`;
 }
 
+<<<<<<< HEAD
+=======
+function simulateSingleGame(){
+  var currentGames = document.getElementById('gamesToSimNumid').value;
+  document.getElementById('gamesToSimNumid').value = 1;
+  simulateMultGame();
+  document.getElementById('gamesToSimNumid').value = currentGames;
+
+}
+
+>>>>>>> parent of c3af93e... Add baseballSim
 function simulateMultGame(){
   var simStats = {
     runs1: [],
