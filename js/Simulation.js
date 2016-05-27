@@ -172,6 +172,14 @@ function renderGameRecord() {
   document.getElementById('gameRecord').value = `${teamOneRecord}-${teamTwoRecord}`;
 }
 
+function simulateSingleGame(){
+  var currentGames = document.getElementById('gamesToSimNumid').value;
+  document.getElementById('gamesToSimNumid').value = 1;
+  simulateMultGame();
+  document.getElementById('gamesToSimNumid').value = currentGames;
+
+}
+
 function simulateMultGame(){
   var simStats = {
     runs1: [],
