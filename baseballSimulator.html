@@ -268,11 +268,7 @@
                 <td>
                   Team 1 Score: <input type="text" id="team1Score"><br/>
                   Team 2 Score: <input type="text" id="team2Score"><br/>
-<<<<<<< HEAD
-                  <input type="button" name="simGame" value="Simulate Single Game" onclick="simulateGame()" /><br/>
-=======
                   <input type="button" name="simGame" value="Simulate Single Game" onclick="simulateSingleGame()" /><br/>
->>>>>>> parent of c3af93e... Add baseballSim
                   <input type="button" name="simMultGame2" value="Simulate Multiple Games" onclick="simulateMultGame()" />
                 </td>
                 <td>
@@ -298,11 +294,7 @@
             The baserunning is very simplistic and follows "ghost man" rules from childhood games. A runner only advances by the number of bases equivalent to the hit. So, a single moves each runner one base, a double two bases, and so-on. This also means there is no such thing as a sacrifice fly in this simulation. However, both of these issues apply to both teams equally and should only have a small effect compared to the statistical fluctuation.<br/>
 
             <h2>Stats in Use</h2>
-<<<<<<< HEAD
-            I've chosen to not rely on inputting average and slugging percentage, and then calling it a day. I tried this initially, as it's the simplest method, however the predictive power was weak at best. Fed the lineups from the 2014 Cubs and Reds, this simple form only found the Cubs to be marginally better than the Reds. This was simply not true. Thus, I moved to requiring more detailed information for each batter at the cost of an ugly form and a large commitment of time from the user. However, the accuracy of the simulation is much better now: coming within 7% of the Cubs vs Reds (2015) win-percentage over the course of 10,000 simulations. Given the lack of baserunning, sac-fly, etc. I'm content with that result. 
-=======
             I've chosen to not rely on inputting average and slugging percentage, and then calling it a day. I tried this initially, as it's the simplest method, however the predictive power was weak at best. Fed the lineups from the 2015 Cubs and Reds, this simple form only found the Cubs to be marginally better than the Reds. This was simply not true. Thus, I moved to requiring more detailed information for each batter at the cost of an ugly form and a large commitment of time from the user. However, the accuracy of the simulation is much better now: coming within 7% of the Cubs vs Reds (2015) win-percentage over the course of 10,000 simulations. Given the lack of baserunning, sac-fly, etc. I'm content with that result. 
->>>>>>> parent of c3af93e... Add baseballSim
 
             <h2>Improvements to Come</h2>
             Currently, the pitching stats are limited. Part of that is due to being under-development... part of that is because accounting for pitching is really quite difficult. Sample sizes are small in terms of game-long perfomance, finding predictive inputs is difficult, and finding a nice way to merge the pitcher and the batter to produce reliable outputs of their head-to-head matchups is questionable. Currently, I use WHIP and ERA (earned run average) to scale the batter's chance of successful at bats and hitting for extra bases. Improvements to this system are underway.<br/> 
